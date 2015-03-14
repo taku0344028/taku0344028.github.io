@@ -7,7 +7,8 @@
   Board.prototype = {
     resize: function(w, h){
       this.elm.style.width = w + "px";
-      this.elm.style.height = w + "px";
+      this.elm.style.height = h + "px";
+      console.log("width = " + w + ", height = " + h);
     }
   };
   
