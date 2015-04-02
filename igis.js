@@ -4,6 +4,8 @@
  */
 
 (function(){
+//    var g_font = "メイリオ";
+    var g_font = "Impact";
     var IGIS_NS = "igis_simulator_namespace";
     // 倍率
     var g_r = 2;
@@ -180,7 +182,7 @@
             ctx.save();
             this.drawIconImage(ctx, x, y, w, h);
             var fontSize = parseInt(h * 0.25);
-            ctx.font = "" + fontSize + "px bold 'Times New Roman'";
+            ctx.font = "" + fontSize + "px bold '" + g_font + "'";
             ctx.strokeStyle = "white";
             ctx.textBaseline = "middle";
             ctx.fillStyle = "black";
@@ -257,7 +259,7 @@
             grad.addColorStop(1, 'rgb(0,0,0)');
             ctx.fillStyle = grad;
             ctx.fillRect(0, h * 0.8, w * 0.2, h * 0.05);
-            ctx.font = "24px 'Times New Roman'";
+            ctx.font = "24px '" + g_font + "'";
             ctx.textBaseline = "middle";
             ctx.fillStyle = "white";
             ctx.fillText("出撃コスト", 0, h * 0.825);
@@ -435,7 +437,7 @@
             ctx.fillRect(0, 0, w, h);
             ctx.textBaseline = "middle";
             ctx.textAlign = "center";
-            ctx.font = "" + h * 0.07 + "px 'Times New Roman'";
+            ctx.font = "" + h * 0.07 + "px '" + g_font + "'";
             // menu title
             (function(){
                 var text = "メンバー編集";
@@ -490,7 +492,7 @@
         drawUnitStatus: function(ctx, w, h, member){
             ctx.save();
             var fontSize = parseInt(h * 0.04);
-            ctx.font = "" + fontSize + "px 'Times New Roman'";
+            ctx.font = "" + fontSize + "px '" + g_font + "'";
             ctx.textBaseline = "middle";
             (function(array){
                 for(var i = 0; i < array.length; i++){
@@ -590,7 +592,7 @@
             var m_h = h * this.heightRate;
             var x = margin;
 	    var fontSize = m_h * 0.4;
-            ctx.font = "" + fontSize + "px 'Times New Roman'";
+            ctx.font = "" + fontSize + "px '" + g_font + "'";
             ctx.textBaseline = "middle";
             ctx.textAlign = "right";
             ctx.lineWidth = 5;
@@ -725,7 +727,7 @@
     var drawButton = function(ctx, x, y, w, h, text, color){
         ctx.save();
         var fontSize = parseInt(h * 0.9);
-        ctx.font = "" + fontSize + "px 'Times New Roman";
+        ctx.font = "" + fontSize + "px '" + g_font + "";
         ctx.strokeStyle = "grey";
         ctx.lineWidth = 5;
         ctx.textAlign = "center";
