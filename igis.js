@@ -345,7 +345,7 @@
             this.mission = new Mission({});
             this.mission.initialize();
             this.startTime = +new Date();
-            this.logger("initialize done");
+            console.log("initialize done");
         },
         save: function(){
             var h = this.heroes;
@@ -583,16 +583,17 @@
         draw: function(ctx, w, h){
             ctx.save();
             ctx.clearRect(0, 0, w, h);
-            ctx.font = "bold 36px 'Times New Roman'";
-            ctx.textBaseline = "middle";
-            ctx.textAlign = "right";
-            ctx.lineWidth = 5;
             var menu = this.menu;
             var margin = w * this.marginRate;
             var padding = h * this.paddingRate;
             var m_w = w * this.widthRate;
             var m_h = h * this.heightRate;
             var x = margin;
+	    var fontSize = m_h * 0.4;
+            ctx.font = "" + fontSize + "px 'Times New Roman'";
+            ctx.textBaseline = "middle";
+            ctx.textAlign = "right";
+            ctx.lineWidth = 5;
             for(var i = 0; i < menu.length; i++){
                 var y = (m_h + padding) * i + margin;
                 ctx.fillStyle = menu[i].active ? "#ee0" : "#c33";
