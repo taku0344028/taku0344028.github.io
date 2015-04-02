@@ -4,7 +4,7 @@
  */
 
 (function(){
-//    var g_font = "メイリオ";
+    //    var g_font = "メイリオ";
     var g_font = "Impact";
     var IGIS_NS = "igis_simulator_namespace";
     // 倍率
@@ -169,9 +169,9 @@
             this.antiMagic = parseInt(this.rate.antiMagic * this.lv + this.base.antiMagic);
         },
         drawUnit: function(ctx){
-          var x = this.x;
-          var y = this.y;
-          ctx.drawImage(this.img.unit, x, y, 40, 40);
+            var x = this.x;
+            var y = this.y;
+            ctx.drawImage(this.img.unit, x, y, 40, 40);
         },
         drawIconImage: function(ctx, x, y, w, h){
             ctx.save();
@@ -235,11 +235,11 @@
     });
     
     var Mission = function(arg){
-      this.map = arg.map || new Map({});
-      this.life = arg.life || 5;
-      this.cost = arg.cost || 0;
-      this.puttableUnit = arg.puttableUnit || 6;
-      this.prevTime = 0;
+	this.map = arg.map || new Map({});
+	this.life = arg.life || 5;
+	this.cost = arg.cost || 0;
+	this.puttableUnit = arg.puttableUnit || 6;
+	this.prevTime = 0;
     };
     Mission.prototype = {
         initialize: function(){
@@ -277,8 +277,8 @@
     };
     Map.prototype = {
         initialize: function(){
-          this.img = new Image();
-          this.img.src = this.imgSrc;
+            this.img = new Image();
+            this.img.src = this.imgSrc;
         },
         draw: function(ctx, w, h){
             ctx.drawImage(this.img, 0, 0, w, h);
@@ -318,17 +318,17 @@
             var heroes = this.heroes;
             this.load();
             /*
-            heroes.push(new Hero({}));
-            heroes.push(new Nenya({x: 100, y: 100}));
-            heroes.push(new Arisa({lv: 50}));
-            heroes.push(new HeavyArmor({}));
-            heroes.push(new Soldger({}));
-            heroes.push(new VampirePrincess({}));
-            heroes.push(new Princess({}));
-            heroes.push(new Walkure({}));
-            heroes.push(new Onmyoji({}));
-            heroes.push(new Logue({}));
-            */
+             heroes.push(new Hero({}));
+             heroes.push(new Nenya({x: 100, y: 100}));
+             heroes.push(new Arisa({lv: 50}));
+             heroes.push(new HeavyArmor({}));
+             heroes.push(new Soldger({}));
+             heroes.push(new VampirePrincess({}));
+             heroes.push(new Princess({}));
+             heroes.push(new Walkure({}));
+             heroes.push(new Onmyoji({}));
+             heroes.push(new Logue({}));
+             */
             heroes.sort(function(a, b){return a.cost - b.cost});
             for(var i = 0; i < heroes.length; i++){
                 heroes[i].initialize();
@@ -356,7 +356,7 @@
             obj.push(x);
             var r = JSON.stringify(obj);
             console.log(r);
-//            localStorage.setItem(IGIS_NS + ":hero", JSON.stringify(this.heroes));
+	    //            localStorage.setItem(IGIS_NS + ":hero", JSON.stringify(this.heroes));
         },
         load: function(){
             var r = localStorage.getItem(IGIS_NS + ":hero");
@@ -457,7 +457,7 @@
             g.addColorStop(0, 'rgb(0, 0, 255)');
             g.addColorStop(1, 'rgb(0, 0, 0)');
             drawButton(ctx, w * 0.8, h * 0.01, w * 0.18, h * 0.08, "戻る", g);
-            var iconSize = w * 0.1;
+            var iconSize = w * 0.1 < h / 6 ? w * 0.1 : h / 6;
             ctx.fillStyle = "cyan";
             ctx.fillRect(w * 0.4, h * 0.1, iconSize * 5, iconSize * 3);
             var members = game.heroes;
@@ -471,7 +471,6 @@
                     member.drawIcon(ctx, x + 5, y + 5, iconSize - 10, iconSize - 10);
                     member.available = t;
                     if(i === this.selectedIdx){
-//                    ctx.fillStyle = "rgba(200, 0, 0, 0.3)";
                     }
                     else{
                         ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
@@ -486,34 +485,35 @@
                 }
             }
             var selectedMember = game.heroes[this.selectedIdx];
-            this.drawUnitStatus(ctx, w, h, selectedMember);
+            this.drawUnitStatus(ctx, w * 0.55, h * 0.12 + iconSize * 3, w * 0.4, h * 0.8 - iconSize * 3, selectedMember);
             ctx.restore();
         },
-        drawUnitStatus: function(ctx, w, h, member){
+        drawUnitStatus: function(ctx, x, y, w, h, member){
             ctx.save();
-            var fontSize = parseInt(h * 0.04);
-            ctx.font = "" + fontSize + "px '" + g_font + "'";
             ctx.textBaseline = "middle";
             (function(array){
+		var dh = h / array.length;
+		var fontSize = parseInt(dh);
+		ctx.font = "" + fontSize + "px '" + g_font + "'";
                 for(var i = 0; i < array.length; i++){
-                    var x = w * 0.75;
-                    var y = (fontSize * 1.1) * i + h * 0.55;
-                    var g1 = ctx.createRadialGradient(x + fontSize / 2, y + fontSize / 2, 0, x + fontSize / 2, y + fontSize / 2, fontSize);
+		    var xx = x + w / 2;
+		    var yy = y + dh * i;
+                    var g1 = ctx.createRadialGradient(xx + fontSize / 2, yy + fontSize / 2, 0, xx + fontSize / 2, yy + fontSize / 2, fontSize);
                     g1.addColorStop(1, 'rgb(0, 0, 0)');
                     g1.addColorStop(0, 'rgb(255, 0, 0)');
                     ctx.fillStyle = "white";
-                    var g2 = ctx.createRadialGradient(w * 0.9 - fontSize / 2, y + fontSize / 2, 0, w * 0.9 - fontSize / 2, y + fontSize / 2, fontSize);
+                    var g2 = ctx.createRadialGradient(x + w - fontSize / 2, yy + fontSize / 2, 0, x + w - fontSize / 2, yy + fontSize / 2, fontSize);
                     g2.addColorStop(1, 'rgb(0, 0, 0)');
                     g2.addColorStop(0, 'rgb(0, 255, 0)');
-                    ctx.fillRect(x, y, w * 0.13, fontSize);
+                    ctx.fillRect(xx, yy, w * 0.5, fontSize);
                     ctx.fillStyle = "black";
                     ctx.textAlign = "center";
-                    drawButton(ctx, x, y, fontSize, fontSize, "-", g1);
-                    drawButton(ctx, w * 0.9 - fontSize, y, fontSize, fontSize, "+", g2);
+                    drawButton(ctx, xx, yy, fontSize, fontSize, "-", g1);
+                    drawButton(ctx, x + w - fontSize, yy, fontSize, fontSize, "+", g2);
                     ctx.textAlign = "left";
-                    ctx.fillText(array[i].k, x - w * 0.15, y + fontSize / 2);
+                    ctx.fillText(array[i].k, x, yy + fontSize / 2);
                     ctx.textAlign = "right";
-                    ctx.fillText(array[i].v, x + w * 0.11, y + fontSize / 2);
+                    ctx.fillText(array[i].v, x + w * 0.85, yy + fontSize / 2);
                 }
             })([
                 {k: "Lv.", v: member.lv},
@@ -787,12 +787,18 @@
     
     // Canvas要素を画面いっぱいに使うためにリサイズする
     var resizeCanvas = function(elm){
-      var s = getAdjustSize(elm);
-      elm.style.width = s.width;
-      elm.style.height = s.height;
-      elm.width = s.width * g_r;
-      elm.height = s.height * g_r;
-      return s;
+	var s = getAdjustSize(elm);
+	if(s.width * 9 > s.height * 16){
+	    s.width = parseInt(s.height * 16 / 9);
+	}
+	else{
+	    s.height = parseInt(s.width * 9 / 16);
+	}
+	elm.style.width = s.width;
+	elm.style.height = s.height;
+	elm.width = s.width * g_r;
+	elm.height = s.height * g_r;
+	return s;
     };
     
     // 画面いっぱいのサイズを取得
