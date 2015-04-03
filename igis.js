@@ -1,13 +1,13 @@
 /*
- * ƒAƒCƒMƒXƒVƒ~ƒ…ƒŒ[ƒ^
+ * ã‚¢ã‚¤ã‚®ã‚¹ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚¿
  * (C) 2015 Takuya Okubo
  */
 
 (function(){
-    //    var g_font = "ƒƒCƒŠƒI";
+    //    var g_font = "ãƒ¡ã‚¤ãƒªã‚ª";
     var g_font = "Impact";
     var IGIS_NS = "igis_simulator_namespace";
-    // ”{—¦
+    // å€ç‡
     var g_r = 2;
     // Enemy class
     var Enemy = function(arg){
@@ -190,8 +190,8 @@
             ctx.lineWidth = 1;
             ctx.strokeText("Lv." + this.lv, x + w * 0.05, y + h * 0.85);
             ctx.fillText("Lv." + this.lv, x + w * 0.05, y + h * 0.85);
-            ctx.strokeText("ƒRƒXƒgF", x + w * 0.05, y + h * 0.15);
-            ctx.fillText("ƒRƒXƒgF", x + w * 0.05, y + h * 0.15);
+            ctx.strokeText("ã‚³ã‚¹ãƒˆï¼š", x + w * 0.05, y + h * 0.15);
+            ctx.fillText("ã‚³ã‚¹ãƒˆï¼š", x + w * 0.05, y + h * 0.15);
             ctx.textAlign = "right";
             ctx.strokeText(this.cost, x + w * 0.95, y + h * 0.15);
             ctx.fillText(this.cost, x + w * 0.95, y + h * 0.15);
@@ -262,8 +262,8 @@
             ctx.font = "24px '" + g_font + "'";
             ctx.textBaseline = "middle";
             ctx.fillStyle = "white";
-            ctx.fillText("oŒ‚ƒRƒXƒg", 0, h * 0.825);
-            ctx.fillText("c‚èoŒ‚‰Â”\F " + this.puttableUnit, w * 0.2, h * 0.825);
+            ctx.fillText("å‡ºæ’ƒã‚³ã‚¹ãƒˆ", 0, h * 0.825);
+            ctx.fillText("æ®‹ã‚Šå‡ºæ’ƒå¯èƒ½ï¼š " + this.puttableUnit, w * 0.2, h * 0.825);
             ctx.textAlign = "right";
             ctx.fillText(this.cost, w * 0.17, h * 0.825);
             ctx.restore();
@@ -317,19 +317,18 @@
             resizeCanvas(this.cvs);
             var heroes = this.heroes;
             this.load();
-            /*
-             heroes.push(new Hero({}));
-             heroes.push(new Nenya({x: 100, y: 100}));
-             heroes.push(new Arisa({lv: 50}));
-             heroes.push(new HeavyArmor({}));
-             heroes.push(new Soldger({}));
-             heroes.push(new VampirePrincess({}));
-             heroes.push(new Princess({}));
-             heroes.push(new Walkure({}));
-             heroes.push(new Onmyoji({}));
-             heroes.push(new Logue({}));
-             */
-            heroes.sort(function(a, b){return a.cost - b.cost});
+            heroes.push(new Hero({}));
+            heroes.push(new Nenya({x: 100, y: 100}));
+            heroes.push(new Arisa({lv: 50}));
+            heroes.push(new HeavyArmor({}));
+            heroes.push(new Soldger({}));
+            heroes.push(new VampirePrincess({}));
+            heroes.push(new Princess({}));
+            heroes.push(new Walkure({}));
+            heroes.push(new Onmyoji({}));
+            heroes.push(new Logue({}));
+            
+	    heroes.sort(function(a, b){return a.cost - b.cost});
             for(var i = 0; i < heroes.length; i++){
                 heroes[i].initialize();
             }
@@ -428,6 +427,11 @@
     var MemberEditor = function(arg){
         this.selectedIdx = 0;
         this.active = false;
+	this.buttonPosition = {
+	    icon: [],
+	    plus: [],
+	    minus: []
+	};
     };
     MemberEditor.prototype = {
         draw: function(ctx, w, h, game){
@@ -440,7 +444,7 @@
             ctx.font = "" + h * 0.07 + "px '" + g_font + "'";
             // menu title
             (function(){
-                var text = "ƒƒ“ƒo[•ÒW";
+                var text = "ãƒ¡ãƒ³ãƒãƒ¼ç·¨é›†";
                 var grad = ctx.createLinearGradient(0, 0, 0, h * 0.1);
                 grad.addColorStop(0, 'rgba(255,255,255,0)');
                 grad.addColorStop(1, 'rgb(0,0,0)');
@@ -456,7 +460,10 @@
             var g = ctx.createLinearGradient(0, 0, 0, h * 0.1);
             g.addColorStop(0, 'rgb(0, 0, 255)');
             g.addColorStop(1, 'rgb(0, 0, 0)');
-            drawButton(ctx, w * 0.8, h * 0.01, w * 0.18, h * 0.08, "–ß‚é", g);
+            drawButton(ctx, w * 0.8, h * 0.01, w * 0.18, h * 0.08, "æˆ»ã‚‹", g);
+	    this.buttonPosition.back = {x: w * 0.8, y: h * 0.01, w: w * 0.18, h: h * 0.08};
+
+	    // member icons
             var iconSize = w * 0.1 < h / 6 ? w * 0.1 : h / 6;
             ctx.fillStyle = "cyan";
             ctx.fillRect(w * 0.4, h * 0.1, iconSize * 5, iconSize * 3);
@@ -465,6 +472,7 @@
                 var x = iconSize * (i % 5) + w * 0.4;
                 var y = iconSize * parseInt(i / 5) + h * 0.1;
                 if(i < members.length){
+		    this.buttonPosition.icon[i] = {x: x, y: y, w: iconSize, h: iconSize};
                     var member = members[i];
                     var t = member.available;
                     member.available = true;
@@ -491,6 +499,7 @@
         drawUnitStatus: function(ctx, x, y, w, h, member){
             ctx.save();
             ctx.textBaseline = "middle";
+	    var self = this;
             (function(array){
 		var dh = h / array.length;
 		var fontSize = parseInt(dh);
@@ -508,6 +517,8 @@
                     ctx.fillRect(xx, yy, w * 0.5, fontSize);
                     ctx.fillStyle = "black";
                     ctx.textAlign = "center";
+		    self.buttonPosition.minus[i] = {x: xx, y: yy, w: fontSize, h: fontSize};
+		    self.buttonPosition.plus[i] = {x: x + w - fontSize, y: yy, w: fontSize, h: fontSize};
                     drawButton(ctx, xx, yy, fontSize, fontSize, "-", g1);
                     drawButton(ctx, x + w - fontSize, yy, fontSize, fontSize, "+", g2);
                     ctx.textAlign = "left";
@@ -518,43 +529,51 @@
             })([
                 {k: "Lv.", v: member.lv},
                 {k: "HP", v: member.hp},
-                {k: "UŒ‚—Í", v: member.attack},
-                {k: "–hŒä—Í", v: member.defence},
-                {k: "–‚–@‘Ï«", v: member.antiMagic},
-                {k: "Ë’ö", v: member.range || "-"},
-                {k: "ƒRƒXƒg", v: member.cost}
+                {k: "æ”»æ’ƒåŠ›", v: member.attack},
+                {k: "é˜²å¾¡åŠ›", v: member.defence},
+                {k: "é­”æ³•è€æ€§", v: member.antiMagic},
+                {k: "å°„ç¨‹", v: member.range || "-"},
+                {k: "ã‚³ã‚¹ãƒˆ", v: member.cost}
             ]);
             ctx.restore();
         },
         /**
-         * return 0: •ÏX‚È‚µ 1: •ÏX‚ ‚è 2: –ß‚é
+         * return 0: å¤‰æ›´ãªã— 1: å¤‰æ›´ã‚ã‚Š 2: æˆ»ã‚‹
          */
         click: function(x, y, w, h, game){
             if(!this.active) return 0;
-            var iconSize = w * 0.1;
-            if(w * 0.1 < x && x < w * 0.1 + iconSize * 8 && h * 0.1 < y && y < h * 0.1 + iconSize * 3){
-                var idx = parseInt((y - h * 0.1) / iconSize) * 8 + parseInt((x - w * 0.1) / iconSize);
-                if(idx < game.heroes.length){
-                    this.selectedIdx = idx;
-                    return 1;
-                }
-            }
             var member = game.heroes[this.selectedIdx];
-            var fontSize = parseInt(h * 0.04);
-            if(w * 0.87 < x && x < w * 0.9){
-                if(h * 0.55 < y && y < h * 0.55 + fontSize){
-                    member.lvUp(true); 
-                    return 1;
-                }
-            }
-            if(w * 0.77 < x && x < w * 0.8){
-                if(h * 0.55 < y && y < h * 0.55 + fontSize){
-                    member.lvDown(true);
-                    return 1;
-                }
-            }
+	    var i, p;
+	    for(i = 0; i < this.buttonPosition.icon.length; i++){
+		p = this.buttonPosition.icon[i];
+		if(p.x < x && x < p.x + p.w && p.y < y && y < p.y + p.h){
+		    this.selectedIdx = i;
+		    return 1;
+		}
+	    }
+	    for(i = 0; i < this.buttonPosition.plus.length; i++){
+		p = this.buttonPosition.plus[i];
+		if(p.x < x && x < p.x + p.w && p.y < y && y < p.y + p.h){
+		    console.log(i);
+		    if(i === 0){
+			member.lvUp(true);
+		    }
+		    return 1;
+		}
+	    }
+	    for(i = 0; i < this.buttonPosition.minus.length; i++){
+		p = this.buttonPosition.minus[i];
+		if(p.x < x && x < p.x + p.w && p.y < y && y < p.y + p.h){
+		    console.log(i);
+		    if(i === 0){
+			member.lvDown(true);
+		    }
+		    return 1;
+		}
+	    }
             
-            if(w * 0.8 < x && y < h * 0.1){
+	    p = this.buttonPosition.back;
+            if(p.x < x && x < p.x + p.w && p.y < y && y < p.y + p.h){
                 this.active = false;
                 return 2;
             }
@@ -582,7 +601,7 @@
         this.active = true;
     };
     MainMenu.prototype = {
-        draw: function(ctx, w, h){
+        draw: function(ctx, w, h, imageLoaded){
             ctx.save();
             ctx.clearRect(0, 0, w, h);
             var menu = this.menu;
@@ -600,7 +619,8 @@
                 var y = (m_h + padding) * i + margin;
                 ctx.fillStyle = menu[i].active ? "#ee0" : "#c33";
                 ctx.fillRect(x, y, m_w, m_h);
-                ctx.drawImage(this.img, this.imgData.x, this.imgData.y, this.imgData.w, this.imgData.h, x + padding, y + padding, m_w - padding * 2, m_h - padding * 2);
+		if(imageLoaded)
+                    ctx.drawImage(this.img, this.imgData.x, this.imgData.y, this.imgData.w, this.imgData.h, x + padding, y + padding, m_w - padding * 2, m_h - padding * 2);
                 ctx.fillStyle = "#333";
                 ctx.strokeStyle = "white";
                 ctx.strokeText(menu[i].title, x + m_w - padding, y + m_h / 2);
@@ -608,7 +628,8 @@
             }
             ctx.restore();
             var self = this;
-            this.img.onload = function(){self.draw(ctx, w, h)};
+            this.img.onload = function(){self.draw(ctx, w, h, true)};
+	    this.img.onerror = function(){self.draw(ctx, w, h, false)};
         },
         setMenu: function(arg){
             this.menu.push({
@@ -684,7 +705,7 @@
         game.initialize();
 
         mainMenu.setMenu({
-            title: "ƒ~ƒbƒVƒ‡ƒ“‘I‘ğ",
+            title: "ãƒŸãƒƒã‚·ãƒ§ãƒ³é¸æŠ",
             click: function(){
                 var res = prompt("hoge", "fuga");
                 console.log(res);
@@ -692,14 +713,14 @@
             }
         });
         mainMenu.setMenu({
-            title: "ƒƒ“ƒo[•ÒW",
+            title: "ãƒ¡ãƒ³ãƒãƒ¼ç·¨é›†",
             click: function(){
                 memberEditor.active = true;
                 memberEditor.draw(ctx, cvs.width, cvs.height, game);
             }
         });
         mainMenu.setMenu({
-            title: "ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“ŠJn",
+            title: "ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³é–‹å§‹",
             click: function(){
                 window.onEachFrame(function(){game.run();});
             }
@@ -763,7 +784,7 @@
         ctx.restore();
     };
     
-    // ƒOƒŠƒbƒhü‚ğ“™ŠÔŠu‚Éˆø‚­
+    // ã‚°ãƒªãƒƒãƒ‰ç·šã‚’ç­‰é–“éš”ã«å¼•ã
     var drawGrid = function(ctx, w, h, dw, dh){
         var tmp;
         ctx.save();
@@ -785,7 +806,7 @@
         ctx.restore();
     };
     
-    // Canvas—v‘f‚ğ‰æ–Ê‚¢‚Á‚Ï‚¢‚Ég‚¤‚½‚ß‚ÉƒŠƒTƒCƒY‚·‚é
+    // Canvasè¦ç´ ã‚’ç”»é¢ã„ã£ã±ã„ã«ä½¿ã†ãŸã‚ã«ãƒªã‚µã‚¤ã‚ºã™ã‚‹
     var resizeCanvas = function(elm){
 	var s = getAdjustSize(elm);
 	if(s.width * 9 > s.height * 16){
@@ -801,7 +822,7 @@
 	return s;
     };
     
-    // ‰æ–Ê‚¢‚Á‚Ï‚¢‚ÌƒTƒCƒY‚ğæ“¾
+    // ç”»é¢ã„ã£ã±ã„ã®ã‚µã‚¤ã‚ºã‚’å–å¾—
     var getAdjustSize = function(elm){
       var adjustWidth = document.documentElement.clientWidth;
       var adjustHeight = document.documentElement.clientHeight;
@@ -815,9 +836,9 @@
       return {width: adjustWidth, height: adjustHeight, border: border};
     };
     
-    // E‹Æ‚²‚Æ‚ÌŠî‘bƒNƒ‰ƒX
-    // ‹ßÚE
-    // ƒ\ƒ‹ƒWƒƒ[/ƒ\ƒ‹ƒWƒƒ[ƒ`[ƒt/ƒ\ƒ‹ƒWƒƒ[ƒGƒŠ[ƒg
+    // è·æ¥­ã”ã¨ã®åŸºç¤ã‚¯ãƒ©ã‚¹
+    // è¿‘æ¥è·
+    // ã‚½ãƒ«ã‚¸ãƒ£ãƒ¼/ã‚½ãƒ«ã‚¸ãƒ£ãƒ¼ãƒãƒ¼ãƒ•/ã‚½ãƒ«ã‚¸ãƒ£ãƒ¼ã‚¨ãƒªãƒ¼ãƒˆ
     var Soldger = function(arg){
         Hero.call(this, arg);
     };
@@ -827,7 +848,7 @@
         }
     });
     
-    // ƒwƒr[ƒA[ƒ}[/ƒoƒgƒ‹ƒ}ƒXƒ^[/ƒMƒKƒ“ƒgƒA[ƒ}[
+    // ãƒ˜ãƒ“ãƒ¼ã‚¢ãƒ¼ãƒãƒ¼/ãƒãƒˆãƒ«ãƒã‚¹ã‚¿ãƒ¼/ã‚®ã‚¬ãƒ³ãƒˆã‚¢ãƒ¼ãƒãƒ¼
     var HeavyArmor = function(arg){
         Hero.call(this, arg);
         this.cost = 15;
@@ -839,7 +860,7 @@
         }
     });
     
-    // ƒƒ‹ƒLƒ…[ƒŒ/ƒ†ƒjƒR[ƒ“ƒiƒCƒg/ƒuƒŠƒ…ƒ“ƒqƒ‹ƒf
+    // ãƒ¯ãƒ«ã‚­ãƒ¥ãƒ¼ãƒ¬/ãƒ¦ãƒ‹ã‚³ãƒ¼ãƒ³ãƒŠã‚¤ãƒˆ/ãƒ–ãƒªãƒ¥ãƒ³ãƒ’ãƒ«ãƒ‡
     var Walkure = function(arg){
         Hero.call(this, arg);
         this.cost = 13;
@@ -851,7 +872,7 @@
         }
     });
     
-    // ƒ[ƒO/ƒAƒTƒVƒ“/ƒ}ƒXƒ^[ƒAƒTƒVƒ“
+    // ãƒ­ãƒ¼ã‚°/ã‚¢ã‚µã‚·ãƒ³/ãƒã‚¹ã‚¿ãƒ¼ã‚¢ã‚µã‚·ãƒ³
     var Logue = function(arg){
         Hero.call(this, arg);
         this.cost = 7;
@@ -863,7 +884,7 @@
         }
     });
 
-    // ƒvƒŠƒ“ƒZƒX/ƒnƒCƒvƒŠƒ“ƒZƒX
+    // ãƒ—ãƒªãƒ³ã‚»ã‚¹/ãƒã‚¤ãƒ—ãƒªãƒ³ã‚»ã‚¹
     var Princess = function(arg){
         Hero.call(this, arg);
         this.cost = 19;
@@ -875,7 +896,7 @@
         }
     });
     
-    // ƒ”ƒ@ƒ“ƒpƒCƒAƒvƒŠƒ“ƒZƒX/ƒ”ƒ@ƒ“ƒpƒCƒAƒNƒC[ƒ“//ƒCƒ‚[ƒ^ƒ‹ƒvƒŠƒ“ƒZƒX/ƒCƒ‚[ƒ^ƒ‹ƒNƒC[ƒ“
+    // ãƒ´ã‚¡ãƒ³ãƒ‘ã‚¤ã‚¢ãƒ—ãƒªãƒ³ã‚»ã‚¹/ãƒ´ã‚¡ãƒ³ãƒ‘ã‚¤ã‚¢ã‚¯ã‚¤ãƒ¼ãƒ³//ã‚¤ãƒ¢ãƒ¼ã‚¿ãƒ«ãƒ—ãƒªãƒ³ã‚»ã‚¹/ã‚¤ãƒ¢ãƒ¼ã‚¿ãƒ«ã‚¯ã‚¤ãƒ¼ãƒ³
     var VampirePrincess = function(arg){
         Hero.call(this, arg);
         this.cost = 19;
@@ -887,7 +908,7 @@
         }
     });
     
-    // ƒoƒ“ƒfƒbƒg/ƒo[ƒT[ƒJ[/ƒfƒXƒgƒƒCƒ„[
+    // ãƒãƒ³ãƒ‡ãƒƒãƒˆ/ãƒãƒ¼ã‚µãƒ¼ã‚«ãƒ¼/ãƒ‡ã‚¹ãƒˆãƒ­ã‚¤ãƒ¤ãƒ¼
     var Bandit = function(arg){
         Hero.call(this, arg);
         this.cost = 10;
@@ -899,7 +920,7 @@
         }
     });
 
-    // ’†‹‰—³•º/ã‹‰—³•º
+    // ä¸­ç´šç«œå…µ/ä¸Šç´šç«œå…µ
     var DragonSoldger = function(arg){
         Hero.call(this, arg);
         this.cost = 7;
@@ -911,7 +932,7 @@
         }
     });
 
-    // —³ím/ƒhƒ‰ƒSƒ“ƒvƒŠƒ“ƒZƒX
+    // ç«œæˆ¦å£«/ãƒ‰ãƒ©ã‚´ãƒ³ãƒ—ãƒªãƒ³ã‚»ã‚¹
     var DragonWarrior = function(arg){
         Hero.call(this, arg);
         this.imgSrc.icon = "http://gyazo.com/a13a516dc2db7f3038dd933dd966bda4.png";
@@ -922,7 +943,7 @@
         }
     });
 
-    // ƒTƒ€ƒ‰ƒC/ƒTƒ€ƒ‰ƒCƒ}ƒXƒ^[/ƒVƒ‡[ƒOƒ“
+    // ã‚µãƒ ãƒ©ã‚¤/ã‚µãƒ ãƒ©ã‚¤ãƒã‚¹ã‚¿ãƒ¼/ã‚·ãƒ§ãƒ¼ã‚°ãƒ³
     var Samurai = function(arg){
         Hero.call(this, arg);
         this.cost = 14;
@@ -934,7 +955,7 @@
         }
     });
 
-    // ”EÒ/”EÒƒ}ƒXƒ^[/’´”E
+    // å¿è€…/å¿è€…ãƒã‚¹ã‚¿ãƒ¼/è¶…å¿
     var Ninja = function(arg){
         Hero.call(this.arg);
         this.imgSrc.icon = "";
@@ -945,7 +966,7 @@
         }
     });
 
-    // ƒyƒKƒTƒXƒ‰ƒCƒ_[/ƒyƒKƒTƒXƒiƒCƒg/ƒyƒKƒTƒXƒ[ƒh
+    // ãƒšã‚¬ã‚µã‚¹ãƒ©ã‚¤ãƒ€ãƒ¼/ãƒšã‚¬ã‚µã‚¹ãƒŠã‚¤ãƒˆ/ãƒšã‚¬ã‚µã‚¹ãƒ­ãƒ¼ãƒ‰
     var PegasusRider = function(arg){
         Hero.call(this.arg);
         this.imgSrc.icon = "";
@@ -956,7 +977,7 @@
         }
     });
     
-    // ƒ_[ƒNƒtƒ@ƒCƒ^[/ƒ_[ƒNƒiƒCƒg/ƒpƒ‰ƒfƒBƒ“
+    // ãƒ€ãƒ¼ã‚¯ãƒ•ã‚¡ã‚¤ã‚¿ãƒ¼/ãƒ€ãƒ¼ã‚¯ãƒŠã‚¤ãƒˆ/ãƒ‘ãƒ©ãƒ‡ã‚£ãƒ³
     var DarkFighter = function(arg){
         Hero.call(this.arg);
         this.imgSrc.icon = "";
@@ -967,7 +988,7 @@
         }
     });
     
-    // ƒAƒxƒ“ƒWƒƒ[/ƒfƒXƒAƒxƒ“ƒWƒƒ[
+    // ã‚¢ãƒ™ãƒ³ã‚¸ãƒ£ãƒ¼/ãƒ‡ã‚¹ã‚¢ãƒ™ãƒ³ã‚¸ãƒ£ãƒ¼
     var Avenger = function(arg){
         Hero.call(this.arg);
         this.imgSrc.icon = "";
@@ -978,7 +999,7 @@
         }
     });
 
-    // ƒ‚ƒ“ƒN/ƒ}ƒXƒ^[ƒ‚ƒ“ƒN/Œ¹
+    // ãƒ¢ãƒ³ã‚¯/ãƒã‚¹ã‚¿ãƒ¼ãƒ¢ãƒ³ã‚¯/æ‹³è–
     var Monk = function(arg){
         Hero.call(this.arg);
         this.imgSrc.icon = "";
@@ -989,7 +1010,7 @@
         }
     });
 
-    // ‘O‰qíp‰Æ/‘O‰qŒRt/•lŒRt
+    // å‰è¡›æˆ¦è¡“å®¶/å‰è¡›è»å¸«/æ­¦äººè»å¸«
     var VanguardTactician = function(arg){
         Hero.call(this.arg);
         this.cost = 15;
@@ -1001,7 +1022,7 @@
         }
     });
 
-    // –‚–@Œ•m/ƒ‹[ƒ“ƒtƒFƒ“ƒT[/ƒ‹[ƒ“ƒ[ƒh
+    // é­”æ³•å‰£å£«/ãƒ«ãƒ¼ãƒ³ãƒ•ã‚§ãƒ³ã‚µãƒ¼/ãƒ«ãƒ¼ãƒ³ãƒ­ãƒ¼ãƒ‰
     var MagicSwordsman = function(arg){
         Hero.call(this.arg);
         this.imgSrc.icon = "";
@@ -1012,7 +1033,7 @@
         }
     });
     
-    // ƒGƒ“ƒWƒFƒ‹/ƒA[ƒNƒGƒ“ƒWƒFƒ‹/ƒhƒ~ƒjƒIƒ“
+    // ã‚¨ãƒ³ã‚¸ã‚§ãƒ«/ã‚¢ãƒ¼ã‚¯ã‚¨ãƒ³ã‚¸ã‚§ãƒ«/ãƒ‰ãƒŸãƒ‹ã‚ªãƒ³
     var Angel = function(arg){
         Hero.call(this.arg);
         this.imgSrc.icon = "";
@@ -1023,7 +1044,7 @@
         }
     });
 
-    // ‚­‚®‚Âg‚¢/‹@bm
+    // ããã¤ä½¿ã„/æ©Ÿç”²å£«
     var PuppetMaster = function(arg){
         Hero.call(this.arg);
         this.imgSrc.icon = "";
@@ -1034,7 +1055,7 @@
         }
     });
     
-    // ƒZ[ƒ‰[/ƒZ[ƒ‰[ƒ`[ƒt/ƒZ[ƒ‰[ƒGƒŠ[ƒg
+    // ã‚»ãƒ¼ãƒ©ãƒ¼/ã‚»ãƒ¼ãƒ©ãƒ¼ãƒãƒ¼ãƒ•/ã‚»ãƒ¼ãƒ©ãƒ¼ã‚¨ãƒªãƒ¼ãƒˆ
     var Sailor = function(arg){
         Hero.call(this.arg);
         this.imgSrc.icon = "";
@@ -1045,7 +1066,7 @@
         }
     });
     
-    // —dŒÏ/“VŒÏ
+    // å¦–ç‹/å¤©ç‹
     var Inu = function(arg){
         Hero.call(this.arg);
         this.imgSrc.icon = "";
@@ -1056,7 +1077,7 @@
         }
     });
     
-    // _Š¯ím/_Š¯ím’·/ƒfƒBƒoƒCƒ“ƒA[ƒ}[
+    // ç¥å®˜æˆ¦å£«/ç¥å®˜æˆ¦å£«é•·/ãƒ‡ã‚£ãƒã‚¤ãƒ³ã‚¢ãƒ¼ãƒãƒ¼
     var PriestWarrior = function(arg){
         Hero.call(this.arg);
         this.imgSrc.icon = "";
@@ -1067,7 +1088,7 @@
         }
     });
 
-    // ƒƒCƒWƒA[ƒ}[/ƒoƒgƒ‹ƒƒCƒW/’´–‚“±ŠZ«
+    // ãƒ¡ã‚¤ã‚¸ã‚¢ãƒ¼ãƒãƒ¼/ãƒãƒˆãƒ«ãƒ¡ã‚¤ã‚¸/è¶…é­”å°é§å°†
     var MagiArmor = function(arg){
         Hero.call(this.arg);
         this.imgSrc.icon = "";
@@ -1078,7 +1099,7 @@
         }
     });
     
-    // ƒhƒ‰ƒSƒ“ƒ‰ƒCƒ_[/ƒhƒ‰ƒSƒ“ƒiƒCƒg
+    // ãƒ‰ãƒ©ã‚´ãƒ³ãƒ©ã‚¤ãƒ€ãƒ¼/ãƒ‰ãƒ©ã‚´ãƒ³ãƒŠã‚¤ãƒˆ
     var DragonRider = function(arg){
         Hero.call(this.arg);
         this.imgSrc.icon = "";
@@ -1089,7 +1110,7 @@
         }
     });
     
-    // ƒ{ƒEƒ‰ƒCƒ_[/ƒ{ƒEƒ‰ƒCƒ_[ƒ`[ƒt
+    // ãƒœã‚¦ãƒ©ã‚¤ãƒ€ãƒ¼/ãƒœã‚¦ãƒ©ã‚¤ãƒ€ãƒ¼ãƒãƒ¼ãƒ•
     var BowRider = function(arg){
         Hero.call(this.arg);
         this.imgSrc.icon = "";
@@ -1100,7 +1121,7 @@
         }
     });
     
-    // ƒƒCƒh
+    // ãƒ¡ã‚¤ãƒ‰
     var Maid = function(arg){
         Hero.call(this.arg);
         this.imgSrc.icon = "";
@@ -1111,18 +1132,18 @@
         }
     });
 
-    // ‰“‹——£E
-    // ƒA[ƒ`ƒƒ[/ƒXƒiƒCƒp[/ƒAƒ‹ƒeƒ~ƒX
+    // é è·é›¢è·
+    // ã‚¢ãƒ¼ãƒãƒ£ãƒ¼/ã‚¹ãƒŠã‚¤ãƒ‘ãƒ¼/ã‚¢ãƒ«ãƒ†ãƒŸã‚¹
     var Archer = function(arg){
         Hero.call(this, arg);
     };
 
-    // ƒƒCƒW/ƒEƒH[ƒƒbƒN/ƒA[ƒNƒƒCƒW
+    // ãƒ¡ã‚¤ã‚¸/ã‚¦ã‚©ãƒ¼ãƒ­ãƒƒã‚¯/ã‚¢ãƒ¼ã‚¯ãƒ¡ã‚¤ã‚¸
     var Sorcerer = function(arg){
         Hero.call(this, arg);
     };
 
-    // ƒq[ƒ‰[/ƒvƒŠ[ƒeƒX/ƒZƒCƒ“ƒg
+    // ãƒ’ãƒ¼ãƒ©ãƒ¼/ãƒ—ãƒªãƒ¼ãƒ†ã‚¹/ã‚»ã‚¤ãƒ³ãƒˆ
     var Healer = function(arg){
         Hero.call(this, arg);
     };
@@ -1132,7 +1153,7 @@
         }
     });
 
-    // ƒEƒBƒbƒ`/ƒ[ƒhƒEƒBƒbƒ`/ƒA[ƒNƒEƒBƒbƒ`
+    // ã‚¦ã‚£ãƒƒãƒ/ãƒ­ãƒ¼ãƒ‰ã‚¦ã‚£ãƒƒãƒ/ã‚¢ãƒ¼ã‚¯ã‚¦ã‚£ãƒƒãƒ
     var Witch = function(arg){
         Hero.call(this, arg);
     };
@@ -1142,32 +1163,32 @@
         }
     });
 
-    // ƒpƒCƒŒ[ƒc/ƒLƒƒƒvƒeƒ“/ƒLƒ“ƒOƒIƒuƒpƒCƒŒ[ƒc
+    // ãƒ‘ã‚¤ãƒ¬ãƒ¼ãƒ„/ã‚­ãƒ£ãƒ—ãƒ†ãƒ³/ã‚­ãƒ³ã‚°ã‚ªãƒ–ãƒ‘ã‚¤ãƒ¬ãƒ¼ãƒ„
     var Pirate = function(arg){
         Hero.call(this, arg);
     };
 
-    // ƒhƒ‰ƒSƒ“ƒVƒƒ[ƒ}ƒ“
+    // ãƒ‰ãƒ©ã‚´ãƒ³ã‚·ãƒ£ãƒ¼ãƒãƒ³
     var DragonShaman = function(arg){
         Hero.call(this, arg);
     };
 
-    // ƒ”ƒ@ƒ“ƒpƒCƒAƒnƒ“ƒ^[/ƒ”ƒ@ƒ“ƒpƒCƒAƒLƒ‰[/ƒAƒ“ƒfƒbƒhƒLƒ‰[
+    // ãƒ´ã‚¡ãƒ³ãƒ‘ã‚¤ã‚¢ãƒãƒ³ã‚¿ãƒ¼/ãƒ´ã‚¡ãƒ³ãƒ‘ã‚¤ã‚¢ã‚­ãƒ©ãƒ¼/ã‚¢ãƒ³ãƒ‡ãƒƒãƒ‰ã‚­ãƒ©ãƒ¼
     var VampireHunter = function(arg){
         Hero.call(this, arg);
     };
     
-    // ƒVƒƒ[ƒ}ƒ“/ƒnƒCƒVƒƒ[ƒ}ƒ“/ƒVƒƒ[ƒ}ƒ“ƒ[ƒh
+    // ã‚·ãƒ£ãƒ¼ãƒãƒ³/ãƒã‚¤ã‚·ãƒ£ãƒ¼ãƒãƒ³/ã‚·ãƒ£ãƒ¼ãƒãƒ³ãƒ­ãƒ¼ãƒ‰
     var Shaman = function(arg){
         Hero.call(this, arg);
     };
     
-    // ƒrƒVƒ‡ƒbƒv/ƒnƒCƒrƒVƒ‡ƒbƒv/ƒGƒ‹ƒ_[ƒrƒVƒ‡ƒbƒv
+    // ãƒ“ã‚·ãƒ§ãƒƒãƒ—/ãƒã‚¤ãƒ“ã‚·ãƒ§ãƒƒãƒ—/ã‚¨ãƒ«ãƒ€ãƒ¼ãƒ“ã‚·ãƒ§ãƒƒãƒ—
     var Bishop = function(arg){
         Hero.call(this, arg);
     };
     
-    // ‰A—zt/‰A—z“ª
+    // é™°é™½å¸«/é™°é™½é ­
     var Onmyoji = function(arg){
         Hero.call(this, arg);
         this.cost = 19;
@@ -1179,61 +1200,61 @@
         }
     });
     
-    // Œã‰qíp‰Æ/Œã‰qŒRt/Q–dŒRt
+    // å¾Œè¡›æˆ¦è¡“å®¶/å¾Œè¡›è»å¸«/å‚è¬€è»å¸«
     var RearguardTactician = function(arg){
         Hero.call(this, arg);
     };
     
-    // ƒTƒ‚ƒi[
+    // ã‚µãƒ¢ãƒŠãƒ¼
     var Summoner = function(arg){
         Hero.call(this, arg);
     };
 
-    // •—…g‚¢/•—…m/•—…“±m
+    // é¢¨æ°´ä½¿ã„/é¢¨æ°´å£«/é¢¨æ°´å°å£«
     var FengShuiMaster = function(arg){
         Hero.call(this, arg);
     };
     
-    // –Cpm/d–Cm/ƒLƒƒƒmƒ“ƒ}ƒXƒ^[
+    // ç ²è¡“å£«/é‡ç ²å£«/ã‚­ãƒ£ãƒãƒ³ãƒã‚¹ã‚¿ãƒ¼
     var GunnaryMaster = function(arg){
         Hero.call(this, arg);
     };
 
-    // ƒ_ƒ“ƒT[/ƒgƒbƒvƒ_ƒ“ƒT[/ƒX[ƒp[ƒ_ƒ“ƒT[
+    // ãƒ€ãƒ³ã‚µãƒ¼/ãƒˆãƒƒãƒ—ãƒ€ãƒ³ã‚µãƒ¼/ã‚¹ãƒ¼ãƒ‘ãƒ¼ãƒ€ãƒ³ã‚µãƒ¼
     var Dancer = function(arg){
         Hero.call(this, arg);
     };
     
-    // ­–±Š¯
+    // æ”¿å‹™å®˜
     var Secretary = function(arg){
         Hero.call(this, arg);
     };
     
-    // ƒlƒNƒƒ}ƒ“ƒT[
+    // ãƒã‚¯ãƒ­ãƒãƒ³ã‚µãƒ¼
     var Necromancer = function(arg){
         Hero.call(this, arg);
     };
     
-    // ƒNƒƒmƒEƒBƒbƒ`
+    // ã‚¯ãƒ­ãƒã‚¦ã‚£ãƒƒãƒ
     var ChronoWitch = function(arg){
         Hero.call(this, arg);
     };
-    // ƒhƒ‹ƒCƒh
+    // ãƒ‰ãƒ«ã‚¤ãƒ‰
     var Druid = function(arg){
         Hero.call(this, arg);
     };
     
-    // ƒAƒ‹ƒPƒ~ƒXƒg/ƒnƒCƒAƒ‹ƒPƒ~ƒXƒg
+    // ã‚¢ãƒ«ã‚±ãƒŸã‚¹ãƒˆ/ãƒã‚¤ã‚¢ãƒ«ã‚±ãƒŸã‚¹ãƒˆ
     var Alchemist = function(arg){
         Hero.call(this, arg);
     };
     
-    // ƒŒƒ“ƒWƒƒ[/ƒnƒCƒŒƒ“ƒWƒƒ[
+    // ãƒ¬ãƒ³ã‚¸ãƒ£ãƒ¼/ãƒã‚¤ãƒ¬ãƒ³ã‚¸ãƒ£ãƒ¼
     var Ranger = function(arg){
         Hero.call(this, arg);
     };
 
-    // ƒLƒƒƒ‰‚²‚Æ‚ÌƒNƒ‰ƒX
+    // ã‚­ãƒ£ãƒ©ã”ã¨ã®ã‚¯ãƒ©ã‚¹
     var Arisa = function(arg){
         Healer.call(this, arg);
         this.cost = 17;
