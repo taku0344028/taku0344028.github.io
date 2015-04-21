@@ -63,10 +63,10 @@ Hero.prototype = {
         }  
     },
     costUp: function(){
-	if(!this.costMax || this.cost < this.costMax){this.cost++}
+	if(!this.costMax || this.cost < this.costMax){this.cost++;}
     },
     costDown: function(){
-	if(this.cost > 1){this.cost--}
+	if(this.cost > 1){this.cost--;}
     },
     adjustParameter: function(){
         this.hp = parseInt(this.rate.hp * this.lv + this.base.hp);

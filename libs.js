@@ -13,8 +13,12 @@ var Button = function(arg){
     this.font = arg.font || g_font;
     this.fillStyle = arg.fillStyle || "white";
     this.strokeStyle = arg.strokeStyle || "black";
+    this.clickAction = arg.clickAction || function(){return 1;};
 };
 Button.prototype = {
+    click: function(){
+	return this.clickAction();
+    },
     inPoints: function(x, y){
 	return this.x < x && x < this.x + this.w && this.y < y && y < this.y + this.h;
     },
@@ -48,3 +52,45 @@ Button.prototype = {
         ctx.restore();
     }
 };
+
+var ImageButton = function(arg){
+    Button.call(this, arg);
+};
+ImageButton.prototype = Object.create(Button.prototype, {
+    constructor: {
+	value: ImageButton
+    },
+    draw: {
+	value: function(ctx){
+	    return false;
+	}
+    }
+});
+
+var IconButton = function(arg){
+    Button.call(this, arg);
+    this.unit = arg.unit || new Hero({});
+};
+IconButton.prototype = Object.create(Button.prototype, {
+    constructor: {
+	value: IconButton
+    },
+    initialize: {
+	value: function(){
+	    this.unit.initialize();
+	}
+    },
+    setMember: {
+	value: function(unit){
+	    unit.initialize();
+	    this.unit = unit;
+	}
+    },
+    draw: {
+	value: function(ctx){
+	    this.unit.drawIcon(ctx, this.x, this.y, this.w, this.h);
+	}
+    }
+});
+
+// This file ends here.

@@ -3,7 +3,6 @@
  * (C) 2015 Takuya Okubo
  */
 
-//    var g_font = "メイリオ";
 var g_font = "Impact";
 var IGIS_NS = "igis_simulator_namespace";
 // 倍率
@@ -134,7 +133,7 @@ Game.prototype = {
         heroes.push(new Onmyoji({}));
         heroes.push(new Logue({}));
         
-	heroes.sort(function(a, b){return a.cost - b.cost});
+	heroes.sort(function(a, b){return a.cost - b.cost;});
         for(var i = 0; i < heroes.length; i++){
             heroes[i].initialize();
         }
@@ -152,7 +151,6 @@ Game.prototype = {
         this.mission = new Mission({});
         this.mission.initialize();
         this.startTime = +new Date();
-        console.log("initialize done");
     },
     save: function(){
         var h = this.heroes;
@@ -231,13 +229,13 @@ Game.prototype = {
 };
 
 var editableStatusList = [
-    {k: "Lv.", v: function(m){return m.lv}, up: function(m){m.lvUp(true)}, down: function(m){m.lvDown(true)}},
-    {k: "HP", v: function(m){return m.hp}, up: function(m){m.hp++}, down: function(m){m.hp--}},
-    {k: "攻撃力", v: function(m){return m.attack}, up: function(m){m.attack++}, down: function(m){m.attack--}},
-    {k: "防御力", v: function(m){return m.defence}, up: function(m){m.defence++}, down: function(m){m.defence--}},
-    {k: "魔法耐性", v: function(m){return m.antiMagic}, up: function(m){m.antiMagic++}, down: function(m){m.antiMagic--}},
-    {k: "射程", v: function(m){return m.range || "-"}, up: function(m){if(m.range) m.range++}, down: function(m){if(m.range) m.range--}},
-    {k: "コスト", v: function(m){return m.cost}, up: function(m){m.costUp()}, down: function(m){m.costDown()}}
+    {k: "Lv.", v: function(m){return m.lv;}, up: function(m){m.lvUp(true);}, down: function(m){m.lvDown(true);}},
+    {k: "HP", v: function(m){return m.hp;}, up: function(m){m.hp++;}, down: function(m){m.hp--;}},
+    {k: "攻撃力", v: function(m){return m.attack;}, up: function(m){m.attack++;}, down: function(m){m.attack--;}},
+    {k: "防御力", v: function(m){return m.defence;}, up: function(m){m.defence++;}, down: function(m){m.defence--;}},
+    {k: "魔法耐性", v: function(m){return m.antiMagic;}, up: function(m){m.antiMagic++;}, down: function(m){m.antiMagic--;}},
+    {k: "射程", v: function(m){return m.range || "-";}, up: function(m){if(m.range) m.range++;}, down: function(m){if(m.range) m.range--;}},
+    {k: "コスト", v: function(m){return m.cost;}, up: function(m){m.costUp();}, down: function(m){m.costDown();}}
 ];
 var MemberEditor = function(arg){
     this.selectedIdx = 0;
@@ -247,8 +245,43 @@ var MemberEditor = function(arg){
 	plus: [],
 	minus: []
     };
+    this.buttons = [];
 };
 MemberEditor.prototype = {
+    initialize: function(w, h, game){
+	var self = this;
+	this.buttons.push(
+	    new Button({
+		text: "戻る",
+		x: w * 0.82,
+		y: h * 0.02,
+		w: w * 0.16,
+		h: h * 0.08,
+		clickAction: function(){
+		    self.active = false;
+		    return 2;
+		}
+	    })
+	);
+
+	var iconSize = w * 0.1 < h / 6 ? w * 0.1 : h / 6;
+	for(var i = 0; i < game.heroes.length; i++){
+	    
+	    var button = new IconButton({
+		x: iconSize * (i % 5) + w * 0.4,
+		y: iconSize * parseInt(i / 5) + h * 0.1,
+		w: iconSize,
+		h: iconSize,
+		clickAction: function(){game.heroes[i].available = true;}
+	    });
+	    button.setMember(game.heroes[i]);
+	    this.buttons.push(button);
+	}
+    },
+    addMember: function(){
+    },
+    removeMember: function(){
+    },
     draw: function(ctx, w, h, game){
         ctx.save();
         ctx.clearRect(0, 0, w, h);
@@ -271,49 +304,49 @@ MemberEditor.prototype = {
             ctx.fillText(text, w * 0.25, h * 0.05);
         })();
         
-        // back button
-        var g = ctx.createLinearGradient(0, 0, 0, h * 0.1);
-        g.addColorStop(0, 'rgb(0, 0, 255)');
-        g.addColorStop(1, 'rgb(0, 0, 0)');
-        drawButton(ctx, w * 0.8, h * 0.01, w * 0.18, h * 0.08, "戻る", g);
-	this.buttonPosition.back = {x: w * 0.8, y: h * 0.01, w: w * 0.18, h: h * 0.08};
-	
 	var bx = w * 0.45, by = h * 0.65, bw = w * 0.1, bh = h * 0.08; 
-	g = ctx.createLinearGradient(0, by, 0, by + bh);
+	var g = ctx.createLinearGradient(0, by, 0, by + bh);
 	g.addColorStop(0, 'rgb(0, 0, 255)');
 	g.addColorStop(1, 'rgb(0, 0, 0)');
 	drawButton(ctx, bx, by, bw, bh, "外す", g);
-	this.buttonPosition.out = {x: bx, y: by, w: bw, h: bh};
+	this.buttonPosition.out = {
+	    x: bx, y: by,
+	    w: bw, h: bh
+	};
 
-	// member icons
         var iconSize = w * 0.1 < h / 6 ? w * 0.1 : h / 6;
         ctx.fillStyle = "cyan";
         ctx.fillRect(w * 0.4, h * 0.1, iconSize * 5, iconSize * 3);
-        var members = game.heroes;
-        for(var i = 0; i < 15; i++){
-            var x = iconSize * (i % 5) + w * 0.4;
-            var y = iconSize * parseInt(i / 5) + h * 0.1;
-            if(i < members.length){
-		this.buttonPosition.icon[i] = {x: x, y: y, w: iconSize, h: iconSize};
-                var member = members[i];
-                var t = member.available;
-                member.available = true;
-                member.drawIcon(ctx, x + 5, y + 5, iconSize - 10, iconSize - 10);
-                member.available = t;
-                if(i === this.selectedIdx){
-                }
-                else{
-                    ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
-                    ctx.fillRect(x + 5, y + 5, iconSize - 10, iconSize - 10);
-                }
-            }
-            else{
-                drawEmptyIcon(ctx, x + 5, y + 5, iconSize - 10, iconSize - 10);
-                if(i === members.length){
-                    drawButton(ctx, x + 10, y + 10, iconSize - 20, iconSize - 20, "+", "grey");
-                }
-            }
-        }
+
+	for(var i = 0; i < this.buttons.length; i++){    
+	    this.buttons[i].draw(ctx);
+	}
+	// member icons
+        // var members = game.heroes;
+        // for(var i = 0; i < 15; i++){
+        //     var x = iconSize * (i % 5) + w * 0.4;
+        //     var y = iconSize * parseInt(i / 5) + h * 0.1;
+        //     if(i < members.length){
+	// 	this.buttonPosition.icon[i] = {x: x, y: y, w: iconSize, h: iconSize};
+        //         var member = members[i];
+        //         var t = member.available;
+        //         member.available = true;
+        //         member.drawIcon(ctx, x + 5, y + 5, iconSize - 10, iconSize - 10);
+        //         member.available = t;
+        //         if(i === this.selectedIdx){
+        //         }
+        //         else{
+        //             ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
+        //             ctx.fillRect(x + 5, y + 5, iconSize - 10, iconSize - 10);
+        //         }
+        //     }
+        //     else{
+        //         drawEmptyIcon(ctx, x + 5, y + 5, iconSize - 10, iconSize - 10);
+        //         if(i === members.length){
+        //             drawButton(ctx, x + 10, y + 10, iconSize - 20, iconSize - 20, "+", "grey");
+        //         }
+        //     }
+        // }
         var selectedMember = game.heroes[this.selectedIdx];
         this.drawUnitStatus(ctx, w * 0.55, h * 0.12 + iconSize * 3, w * 0.4, h * 0.8 - iconSize * 3, selectedMember);
         ctx.restore();
@@ -385,11 +418,12 @@ MemberEditor.prototype = {
 	    }
 	}
         
-	p = this.buttonPosition.back;
-        if(p.x < x && x < p.x + p.w && p.y < y && y < p.y + p.h){
-            this.active = false;
-            return 2;
-        }
+	for(i = 0; i < this.buttons.length; i++){
+	    var button = this.buttons[i];
+	    if(button.inPoints(x, y)){
+		return button.click();
+	    }
+	}
         return 0;
     }
 };
@@ -411,9 +445,10 @@ var MainMenu = function(){
     this.widthRate = 0.8;
     this.heightRate = 0.2;
     this.active = true;
+    this.imageLoaded = false;
 };
 MainMenu.prototype = {
-    draw: function(ctx, w, h, imageLoaded){
+    draw: function(ctx, w, h){
         ctx.save();
         ctx.clearRect(0, 0, w, h);
         var menu = this.menu;
@@ -431,7 +466,7 @@ MainMenu.prototype = {
             var y = (m_h + padding) * i + margin;
             ctx.fillStyle = menu[i].active ? "#ee0" : "#c33";
             ctx.fillRect(x, y, m_w, m_h);
-	    if(imageLoaded)
+	    if(this.imageLoaded)
                 ctx.drawImage(this.img, this.imgData.x, this.imgData.y, this.imgData.w, this.imgData.h, x + padding, y + padding, m_w - padding * 2, m_h - padding * 2);
             ctx.fillStyle = "#333";
             ctx.strokeStyle = "white";
@@ -440,8 +475,8 @@ MainMenu.prototype = {
         }
         ctx.restore();
         var self = this;
-        this.img.onload = function(){self.draw(ctx, w, h, true)};
-	this.img.onerror = function(){self.draw(ctx, w, h, false)};
+        this.img.onload = function(){self.imageLoaded = true; self.draw(ctx, w, h)};
+	this.img.onerror = function(){self.draw(ctx, w, h)};
     },
     setMenu: function(arg){
         this.menu.push({
@@ -515,7 +550,7 @@ window.onload = function(){
         cvs: cvs
     });
     game.initialize();
-
+    memberEditor.initialize(cvs.width, cvs.height, game);
     mainMenu.setMenu({
         title: "ミッション選択",
         click: function(){
