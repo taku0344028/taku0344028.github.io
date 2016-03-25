@@ -1,7 +1,7 @@
 /******************************************************************************
  * microrobot.js - Micro Robot Game
  *
- * Time-stamp: <Fri Mar 25 22:11:21 2016>
+ * Time-stamp: <Fri Mar 25 23:03:00 2016>
  *
  * (C) 2016 Takuya Okubo
  ******************************************************************************/
@@ -56,10 +56,13 @@ var MicroRobot = MicroRobot || {};
 	this.startDice = this.createDice(diceList[startIdx]);
 	this.endDice = this.createDice(diceList[endIdx]);
 	this.activeDice = this.startDice;
+
+	this.step = 0;
     };
 
     ns.Board.prototype.setActiveDice = function(row, col) {
 	this.activeDice = this.grid[row][col];
+	this.step++;
     };
 
     ns.Board.prototype.createDice = function(n) {
@@ -80,13 +83,13 @@ var MicroRobot = MicroRobot || {};
     };
 
     ns.Board.prototype.getDiceStatus = function(dice) {
-	if (dice.n == this.activeDice.n && dice.color == this.activeDice.color) {
+	if (this.dEq(this.activeDice, dice)) {
 	    return F_ACTIVE;
 	}
-	if (dice.n == this.startDice.n && dice.color == this.startDice.color) {
+	if (this.dEq(this.startDice, dice)) {
 	    return F_START;
 	}
-	if (dice.n == this.endDice.n && dice.color == this.endDice.color) {
+	if (this.dEq(this.endDice, dice)) {
 	    return F_END;
 	}
 	return F_INACTIVE;
@@ -96,12 +99,46 @@ var MicroRobot = MicroRobot || {};
 	return Math.floor(Math.random() * (max - min) + min);
     };
 
+    ns.Board.prototype.check = function() {
+	return this.dEq(this.activeDice, this.endDice);
+    };
+
+    ns.Board.prototype.dEq = function(rightD, leftD) {
+	return rightD.n == leftD.n && rightD.color == leftD.color;
+    };
+
     ns.BoardWriter = function(cvs) {
 	this.cvs = cvs;
 	this.ctx = cvs.getContext("2d");
 	this.tileSize = 160;
-	this.cvs.width = this.tileSize * N_COL;
+	this.controlPanelWidth = 360;
+	this.cvs.width = this.tileSize * N_COL + this.controlPanelWidth;
 	this.cvs.height = this.tileSize * N_ROW;
+	this.controlPanelHeight = this.cvs.height;
+	this.cvs.style.width = Math.floor(this.cvs.width / 2) + "px";
+	this.cvs.style.height = Math.floor(this.cvs.height / 2) + "px";
+    };
+
+    ns.BoardWriter.prototype.writeControlPanel = function(board) {
+	this.ctx.save();
+	this.ctx.fillStyle = "brown";
+	this.ctx.fillRect(0, 0, this.controlPanelWidth, this.controlPanelHeight);
+
+	var margin = this.controlPanelWidth / 10;
+	this.ctx.fillStyle = "black";
+	this.ctx.font = this.tileSize / 3 + "px 'Times New Roman'";
+	this.ctx.translate(margin, 0);
+
+	var panelHeight = this.tileSize / 2;
+	this.ctx.translate(0, panelHeight);
+	this.ctx.fillText("STEP: " + board.step, 0, 0, this.controlPanelWidth - margin);
+
+	if (board.check()) {
+	    this.ctx.translate(0, panelHeight);
+	    this.ctx.fillText("GOAL!!", 0, 0, this.controlPanelWidth - margin);
+	}
+
+	this.ctx.restore();
     };
 
     ns.BoardWriter.prototype.write = function(board) {
@@ -116,6 +153,10 @@ var MicroRobot = MicroRobot || {};
 	    this.ctx.restore();
 	    this.ctx.translate(0, this.tileSize);
 	}
+	this.ctx.restore();
+	this.ctx.save();
+	this.ctx.translate(this.tileSize * N_COL, 0);
+	this.writeControlPanel(board);
 	this.ctx.restore();
     };
 
@@ -210,13 +251,16 @@ var MicroRobot = MicroRobot || {};
     };
 
     ns.setEventListener = function(board, writer) {
-	console.log("setEventListener");
 	writer.cvs.onclick = function(e) {
-	    var row = Math.floor(e.offsetY / parseInt(this.style.height) * 6);
-	    var col = Math.floor(e.offsetX / parseInt(this.style.width) * 6);
-	    board.setActiveDice(row, col);
-	    writer.write(board);
-	    console.log(e.offsetX + ", " + e.offsetY);
+	    var x = e.offsetX * this.width / parseInt(this.style.width);
+	    var y = e.offsetY * this.height / parseInt(this.style.height);
+	    var row = Math.floor(y / writer.tileSize);
+	    var col = Math.floor(x / writer.tileSize);
+	    if (row < N_ROW && col < N_COL) {
+		board.setActiveDice(row, col);
+		writer.write(board);
+	    }
+	    console.log("x = " + x + ", Y = " + y + ", row = " + row + ", col = " + col);
 	};
     };
 })(MicroRobot);
