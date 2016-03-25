@@ -1,0 +1,16 @@
+<html>
+  <head>
+    <title>MicroRobot</title>
+  </head>
+  <body>
+    <canvas id="gameCanvas"></canvas>
+    <script type="text/javascript" src="js/microrobot.js"></script>
+    <script>
+      var board = new MicroRobot.Board();
+      var writer = new MicroRobot.BoardWriter(document.getElementById("gameCanvas"));
+
+      board.initialize();
+      writer.write(board);
+    </script>
+  </body>
+</html>
