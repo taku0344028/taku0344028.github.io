@@ -8,12 +8,8 @@
     <script type="text/javascript" src="js/microrobot.js"></script>
     <script>
       var cvs = document.getElementById("gameCanvas");
-      var board = new MicroRobot.Board();
-      var writer = new MicroRobot.BoardWriter(cvs);
-      MicroRobot.setEventListener(board, writer);
-
-      board.initialize();
-      writer.write(board);
+      var gm = new MicroRobot.GameManager();
+      gm.initialize(cvs);
     </script>
   </body>
 </html>
