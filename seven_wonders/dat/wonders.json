@@ -1,0 +1,392 @@
+loadwonders([
+    {
+	"name": "The Colossus of Rhodes",
+	"side_A": {
+	    "provides": {
+		"ore": 1
+	    },
+	    "bonus": [
+		{
+		    "cost": {
+			"wood": 2
+		    },
+		    "vp": 3
+		},
+		{
+		    "cost": {
+			"clay brick": 3
+		    },
+		    "shield": 2
+		},
+		{
+		    "cost": {
+			"ore": 4
+		    },
+		    "vp": 7
+		}
+	    ]
+	},
+	"side_B": {
+	    "provides": {
+		"ore": 1
+	    },
+	    "bonus": [
+		{
+		    "cost": {
+			"stone": 3
+		    },
+		    "shield": 1,
+		    "vp": 3,
+		    "gold": 3
+		},
+		{
+		    "cost": {
+			"ore": 4
+		    },
+		    "shield": 1,
+		    "vp": 4,
+		    "gold": 4
+		}
+	    ]
+	}
+    },
+    {
+	"name": "The Lighthouse of Alexandria",
+	"side_A": {
+	    "provides": {
+		"glass": 1
+	    },
+	    "bonus": [
+		{
+		    "cost": {
+			"stone": 2
+		    },
+		    "vp": 3
+		},
+		{
+		    "cost": {
+			"ore": 2
+		    },
+		    "clay brick/ore/wood/stone": 1
+		},
+		{
+		    "cost": {
+			"glass": 2
+		    },
+		    "vp": 7
+		}
+	    ]
+	},
+	"side_B": {
+	    "provides": {
+		"glass": 1
+	    },
+	    "bonus": [
+		{
+		    "cost": {
+			"clay brick": 2
+		    },
+		    "wood/stone/ore/clay brick": 1
+		},
+		{
+		    "cost": {
+			"wood": 1
+		    },
+		    "glass/textile/papyrus": 1
+		},
+		{
+		    "cost": {
+			"stone": 3
+		    },
+		    "vp": 7
+		}
+	    ]
+	}
+    },
+    {
+	"name": "The Temple of Artemis in Ephesus",
+	"side_A": {
+	    "provides": {
+		"papyrus": 1
+	    },
+	    "bonus": [
+		{
+		    "cost": {
+			"stone": 2
+		    },
+		    "vp": 3
+		},
+		{
+		    "cost": {
+			"wood": 2
+		    },
+		    "gold": 9
+		},
+		{
+		    "cost": {
+			"papyrus": 2
+		    },
+		    "vp": 7
+		}
+	    ]
+	},
+	"side_B": {
+	    "provides": {
+		"papyrus": 1
+	    },
+	    "bonus": [
+		{
+		    "cost": {
+			"stone": 2
+		    },
+		    "vp": 2,
+		    "gold": 4
+		},
+		{
+		    "cost": {
+			"wood": 2
+		    },
+		    "vp": 3,
+		    "gold": 4
+		},
+		{
+		    "cost": {
+			"glass": 1,
+			"textiles": 1,
+			"papyrus": 1
+		    },
+		    "vp": 5,
+		    "gold": 4
+		}
+	    ]
+	}
+    },
+    {
+	"name": "The Hanging Gardens of Babylon",
+	"side_A": {
+	    "provides": {
+		"clay brick": 1
+	    },
+	    "bonus": [
+		{
+		    "cost": {
+			"clay brick": 2
+		    },
+		    "vp": 3
+		},
+		{
+		    "cost": {
+			"wood": 3
+		    },
+		    "tablet/compass/gear": 1
+		},
+		{
+		    "cost": {
+			"clay brick": 4
+		    },
+		    "vp": 7
+		}
+	    ]
+	},
+	"side_B": {
+	    "provides": {
+		"clay brick": 1
+	    },
+	    "bonus": [
+		{
+		    "cost": {
+			"clay brick": 1,
+			"textiles": 1
+		    },
+		    "vp": 3
+		},
+		{
+		    "cost": {
+			"wood": 2,
+			"glass": 1
+		    },
+		    "not discard": 1
+		},
+		{
+		    "cost": {
+			"clay brick": 3,
+			"papyrus": 1
+		    },
+		    "tablet/compass/gear": 1
+		}
+	    ]
+	}
+    },
+    {
+	"name": "The Statue of Zeus in Olympia",
+	"side_A": {
+	    "provides": {
+		"wood": 1
+	    },
+	    "bonus": [
+		{
+		    "cost": {
+			"wood": 2
+		    },
+		    "vp": 3
+		},
+		{
+		    "cost": {
+			"stone": 2
+		    },
+		    "cost free": 1
+		},
+		{
+		    "cost": {
+			"ore": 2
+		    },
+		    "vp": 7
+		}
+	    ]
+	},
+	"side_B": {
+	    "provides": {
+		"wood": 1
+	    },
+	    "bonus": [
+		{
+		    "cost": {
+			"wood": 2
+		    },
+		    "price 1 gold left": 1,
+		    "price 1 gold right": 1
+		},
+		{
+		    "cost": {
+			"stone": 2
+		    },
+		    "vp": 5
+		},
+		{
+		    "cost": {
+			"ore": 2,
+			"textiles": 1
+		    },
+		    "copy neigbors guild": 1
+		}
+	    ]
+	}
+    },
+    {
+	"name": "The Mausoleum of Halicarnassus",
+	"side_A": {
+	    "provides": {
+		"textiles": 1
+	    },
+	    "bonus": [
+		{
+		    "cost": {
+			"clay brick": 2
+		    },
+		    "vp": 3
+		},
+		{
+		    "cost": {
+			"ore": 3
+		    },
+		    "discard build": 1
+		},
+		{
+		    "cost": {
+			"textile": 2
+		    },
+		    "vp": 7
+		}
+	    ]
+	},
+	"side_B": {
+	    "provides": {
+		"textiles": 1
+	    },
+	    "bonus": [
+		{
+		    "cost": {
+			"ore": 2
+		    },
+		    "vp": 2,
+		    "discard build": 1
+		},
+		{
+		    "cost": {
+			"clay brick": 3
+		    },
+		    "vp": 1,
+		    "discard build": 1
+		},
+		{
+		    "cost": {
+			"glass": 1,
+			"papyrus": 1,
+			"textiles": 1
+		    },
+		    "discard build": 1
+		}
+	    ]
+	}
+    },
+    {
+	"name": "The Pyramids of Giza",
+	"side_A": {
+	    "provides": {
+		"stone": 1
+	    },
+	    "bonus": [
+		{
+		    "cost": {
+			"stone": 2
+		    },
+		    "vp": 3
+		},
+		{
+		    "cost": {
+			"wood": 3
+		    },
+		    "vp": 5
+		},
+		{
+		    "cost": {
+			"stone": 4
+		    },
+		    "vp": 7
+		}
+	    ]
+	},
+	"side_B": {
+	    "provides": {
+		"stone": 1
+	    },
+	    "bonus": [
+		{
+		    "cost": {
+			"wood": 2
+		    },
+		    "vp": 3
+		},
+		{
+		    "cost": {
+			"stone": 3
+		    },
+		    "vp": 5
+		},
+		{
+		    "cost": {
+			"clay brick": 3
+		    },
+		    "vp": 5,
+		},
+		{
+		    "cost": {
+			"stone": 4,
+			"papyrus": 1
+		    },
+		    "vp": 7
+		}
+	    ]
+	}
+    },
+]);

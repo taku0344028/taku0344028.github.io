@@ -1,0 +1,865 @@
+loadcards([
+    // AGE I
+    {
+	"name": "LUMBER YARD",
+	"age": 1,
+	"type": "brown",
+	"cost": {},
+	"provides": {
+	    "wood": 1
+	}
+    },
+    {
+	"name": "STONE PIT",
+	"age": 1,
+	"type": "brown",
+	"cost": {},
+	"provides": {
+	    "stone": 1
+	}
+    },
+    {
+	"name": "CLAY POOL",
+	"age": 1,
+	"type": "brown",
+	"cost": {},
+	"provides": {
+	    "clay brick": 1
+	}
+    },
+    {
+	"name": "ORE VEIN",
+	"age": 1,
+	"type": "brown",
+	"cost": {},
+	"provides": {
+	    "ore": 1
+	}
+    },
+    {
+	"name": "TREE FARM",
+	"age": 1,
+	"type": "brown",
+	"cost": {
+	    "gold": 1
+	},
+	"provides": {
+	    "wood/clay brick": 1
+	}
+    },
+    {
+	"name": "EXCAVATION",
+	"age": 1,
+	"type": "brown",
+	"cost": {
+	    "gold": 1
+	},
+	"provides": {
+	    "stone/clay brick": 1
+	}
+    },
+    {
+	"name": "CLAY PIT",
+	"age": 1,
+	"type": "brown",
+	"cost": {
+	    "gold": 1
+	},
+	"provides": {
+	    "clay brick/ore": 1
+	}
+    },
+    {
+	"name": "TIMBER YARD",
+	"age": 1,
+	"type": "brown",
+	"cost": {
+	    "gold": 1
+	},
+	"provides": {
+	    "stone/wood": 1
+	}
+    },
+    {
+	"name": "LOOM",
+	"age": 1,
+	"type": "grey",
+	"cost": {},
+	"provides": {
+	    "textiles": 1
+	}
+    },
+    {
+	"name": "GLASSWORKS",
+	"age": 1,
+	"type": "grey",
+	"cost": {},
+	"provides": {
+	    "glass": 1
+	}
+    },
+    {
+	"name": "PRESS",
+	"age": 1,
+	"type": "grey",
+	"cost": {},
+	"provides": {
+	    "papyrus": 1
+	}
+    },
+    {
+	"name": "PAWNSHOP",
+	"age": 1,
+	"type": "blue",
+	"cost": {},
+	"provides": {
+	    "vp": 3
+	}
+    },
+    {
+	"name": "BATHS",
+	"age": 1,
+	"type": "blue",
+	"cost": {
+	    "stone": 1
+	},
+	"provides": {
+	    "vp": 3
+	}
+    },
+    {
+	"name": "ALTER",
+	"age": 1,
+	"type": "blue",
+	"cost": {},
+	"provides": {
+	    "vp": 2
+	}
+    },
+    {
+	"name": "THEATHER",
+	"age": 1,
+	"type": "blue",
+	"cost": {},
+	"provides": {
+	    "vp": 2
+	}
+    },
+    {
+	"name": "TAVERN",
+	"age": 1,
+	"type": "yellow",
+	"cost": {},
+	"provides": {
+	    "gold": 5
+	}
+    },
+    {
+	"name": "EAST TRADING POST",
+	"age": 1,
+	"type": "yellow",
+	"cost": {},
+	"provides": {
+	    "buy 1 gold right": 1
+	}
+    },
+    {
+	"name": "WEST TRADING POST",
+	"age": 1,
+	"type": "yellow",
+	"cost": {},
+	"provides": {
+	    "buy 1 gold left": 1
+	}
+    },
+    {
+	"name": "MARKETPLACE",
+	"age": 1,
+	"type": "yellow",
+	"cost": {},
+	"provides": {
+	    "buy manufuctured 1 gold": 1
+	}
+    },
+    {
+	"name": "STOCKADE",
+	"age": 1,
+	"type": "red",
+	"cost": {
+	    "wood": 1
+	},
+	"provides": {
+	    "shield": 1
+	}
+    },
+    {
+	"name": "BARRACKS",
+	"age": 1,
+	"type": "red",
+	"cost": {
+	    "ore": 1
+	},
+	"provides": {
+	    "shield": 1
+	}
+    },
+    {
+	"name": "GUARD TOWER",
+	"age": 1,
+	"type": "red",
+	"cost": {
+	    "clay brick": 1
+	},
+	"provides": {
+	    "shield": 1
+	}
+    },
+    {
+	"name": "APOTHECARY",
+	"age": 1,
+	"type": "green",
+	"cost": {
+	    "textiles": 1
+	},
+	"provides": {
+	    "compass": 1
+	}
+    },
+    {
+	"name": "WORKSHOP",
+	"age": 1,
+	"type": "green",
+	"cost": {
+	    "glass": 1
+	},
+	"provides": {
+	    "gear": 1
+	}
+    },
+    {
+	"name": "SCRIPTORIUM",
+	"age": 1,
+	"type": "green",
+	"cost": {
+	    "papyrus": 1
+	},
+	"provides": {
+	    "tablet": 1
+	}
+    },
+
+    // AGE II
+    {
+	"name": "SAWMILL",
+	"age": 2,
+	"type": "brown",
+	"cost": {
+	    "gold": 1
+	},
+	"provides": {
+	    "wood": 2
+	}
+    },
+    {
+	"name": "QUARRY",
+	"age": 2,
+	"type": "brown",
+	"cost": {
+	    "gold": 1
+	},
+	"provides": {
+	    "stone": 2
+	}
+    },
+    {
+	"name": "BRICKYARD",
+	"age": 2,
+	"type": "brown",
+	"cost": {
+	    "gold": 1
+	},
+	"provides": {
+	    "clay brick": 2
+	}
+    },
+    {
+	"name": "FOUNDRY",
+	"age": 2,
+	"type": "brown",
+	"cost": {
+	    "gold": 1
+	},
+	"provides": {
+	    "ore": 2
+	}
+    },
+    {
+	"name": "LOOM",
+	"age": 2,
+	"type": "grey",
+	"cost": {},
+	"provides": {
+	    "textiles": 1
+	}
+    },
+    {
+	"name": "GLASSWORKS",
+	"age": 2,
+	"type": "grey",
+	"cost": {},
+	"provides": {
+	    "glass": 1
+	}
+    },
+    {
+	"name": "PRESS",
+	"age": 2,
+	"type": "grey",
+	"cost": {},
+	"provides": {
+	    "papyrus": 1
+	}
+    },
+    {
+	"name": "AQUEDUCT",
+	"age": 2,
+	"type": "blue",
+	"cost": {
+	    "stone": 3
+	},
+	"provides": {
+	    "vp": 5
+	}
+    },
+    {
+	"name": "TEMPLE",
+	"age": 2,
+	"type": "blue",
+	"cost": {
+	    "wood": 1,
+	    "clay brick": 1,
+	    "glass": 1
+	},
+	"provides": {
+	    "vp": 3
+	}
+    },
+    {
+	"name": "STATUE",
+	"age": 2,
+	"type": "blue",
+	"cost": {
+	    "ore": 2,
+	    "wood": 1
+	},
+	"provides": {
+	    "vp": 4
+	}
+    },
+    {
+	"name": "COURTHOUSE",
+	"age": 2,
+	"type": "blue",
+	"cost": {
+	    "clay brick": 2,
+	    "textiles": 1
+	},
+	"provides": {
+	    "vp": 4
+	}
+    },
+    {
+	"name": "FORUM",
+	"age": 2,
+	"type": "yellow",
+	"cost": {
+	    "clay brick": 2
+	},
+	"provides": {
+	    "textiles/glass/papyrus": 1
+	}
+    },
+    {
+	"name": "CARAVANSERY",
+	"age": 2,
+	"type": "yellow",
+	"cost": {
+	    "wood": 2
+	},
+	"provides": {
+	    "clay brick/stone/ore/wood": 1
+	}
+    },
+    {
+	"name": "VINEYARD",
+	"age": 2,
+	"type": "yellow",
+	"cost": {},
+	"provides": {
+	    "gain": {
+		"target": 3,
+		"type": "brown",
+		"gold": 1
+	    }
+	}
+    },
+    {
+	"name": "BAZAR",
+	"age": 2,
+	"type": "yellow",
+	"cost": {},
+	"provides": {
+	    "gain": {
+		"target": 3,
+		"type": "grey",
+		"gold": 2
+	    }
+	}
+    },
+    {
+	"name": "WALLS",
+	"age": 2,
+	"type": "red",
+	"cost": {
+	    "stone": 3
+	},
+	"provides": {
+	    "shield": 2
+	}
+    },
+    {
+	"name": "TRAINING GROUND",
+	"age": 2,
+	"type": "red",
+	"cost": {
+	    "ore": 2,
+	    "wood": 1
+	},
+	"provides": {
+	    "shield": 2
+	}
+    },
+    {
+	"name": "STABLES",
+	"age": 2,
+	"type": "red",
+	"cost": {
+	    "ore": 1,
+	    "clay brick": 1,
+	    "wood": 1
+	},
+	"provides": {
+	    "shield": 1
+	}
+    },
+    {
+	"name": "ARCHERY RANGE",
+	"age": 2,
+	"type": "red",
+	"cost": {
+	    "wood": 2,
+	    "ore": 1
+	},
+	"provides": {
+	    "shield": 1
+	}
+    },
+    {
+	"name": "DISPENSARY",
+	"age": 2,
+	"type": "green",
+	"cost": {
+	    "ore": 2,
+	    "glass": 1
+	},
+	"provides": {
+	    "compass": 1
+	}
+    },
+    {
+	"name": "LABORATORY",
+	"age": 2,
+	"type": "green",
+	"cost": {
+	    "clay brick": 2,
+	    "papyrus": 1
+	},
+	"provides": {
+	    "gear": 1
+	}
+    },
+    {
+	"name": "LIBRARY",
+	"age": 2,
+	"type": "green",
+	"cost": {
+	    "stone": 2,
+	    "textiles": 1
+	},
+	"provides": {
+	    "tablet": 1
+	}
+    },
+    {
+	"name": "SCHOOL",
+	"age": 2,
+	"type": "green",
+	"cost": {
+	    "wood": 1,
+	    "papyrus": 1
+	},
+	"provides": {
+	    "tablet": 1
+	}
+    },
+
+    // AGE III
+    {
+	"name": "HAVEN",
+	"age": 3,
+	"type": "yellow",
+	"cost": {
+	    "ore": 1,
+	    "wood": 1,
+	    "textiles": 1
+	},
+	"provides": {
+	    "gain": {
+		"target": 1,
+		"type": "brown",
+		"gold": 1,
+		"vp": 1
+	    }
+	}
+    },
+    {
+	"name": "LIGHTHOUSE",
+	"age": 3,
+	"type": "yellow",
+	"cost": {
+	    "stone": 1,
+	    "glass": 1
+	},
+	"provides": {
+	    "gain": {
+		"target": 1,
+		"type": "yellow",
+		"gold": 1,
+		"vp": 1
+	    }
+	}
+    },
+    {
+	"name": "CHAMBER OF COMMERCE",
+	"age": 3,
+	"type": "yellow",
+	"cost": {
+	    "clay brick": 2,
+	    "papyrus": 1
+	},
+	"provides": {
+	    "gain": {
+		"target": 1,
+		"type": "grey",
+		"gold": 2,
+		"vp": 2
+	    }
+	}
+    },
+    {
+	"name": "ARENA",
+	"age": 3,
+	"type": "yellow",
+	"cost": {
+	    "stone": 2,
+	    "ore": 1
+	},
+	"provides": {
+	    "gain": {
+		"target": 1,
+		"type": "age",
+		"gold": 3,
+		"vp": 1
+	    }
+	}
+    },
+    {
+	"name": "FORTIFICATIONS",
+	"age": 3,
+	"type": "red",
+	"cost": {
+	    "ore": 3,
+	    "stone": 1
+	},
+	"provides": {
+	    "shield": 3
+	}
+    },
+    {
+	"name": "CIRCUS",
+	"age": 3,
+	"type": "red",
+	"cost": {
+	    "stone": 3,
+	    "ore": 1
+	},
+	"provides": {
+	    "shield": 3
+	}
+    },
+    {
+	"name": "ARSENAL",
+	"age": 3,
+	"type": "red",
+	"cost": {
+	    "ore": 1,
+	    "wood": 2,
+	    "textiles": 1
+	},
+	"provides": {
+	    "shield": 3
+	}
+    },
+    {
+	"name": "SIEGE WORKSHOP",
+	"age": 3,
+	"type": "red",
+	"cost": {
+	    "wood": 1,
+	    "clay brick": 3
+	},
+	"provides": {
+	    "shield": 3
+	}
+    },
+    {
+	"name": "LODGE",
+	"age": 3,
+	"type": "green",
+	"cost": {
+	    "clay brick": 2,
+	    "textiles": 1,
+	    "papyrus": 1
+	},
+	"provides": {
+	    "compass": 1
+	}
+    },
+    {
+	"name": "OBSERVATORY",
+	"age": 3,
+	"type": "green",
+	"cost": {
+	    "ore": 2,
+	    "glass": 1,
+	    "textiles": 1
+	},
+	"provides": {
+	    "gear": 1
+	}
+    },
+    {
+	"name": "UNIVERSITY",
+	"age": 3,
+	"type": "green",
+	"cost": {
+	    "wood": 2,
+	    "papyrus": 1,
+	    "glass": 1
+	},
+	"provides": {
+	    "tablet": 1
+	}
+    },
+    {
+	"name": "ACADEMY",
+	"age": 3,
+	"type": "green",
+	"cost": {
+	    "stone": 3,
+	    "glass": 1
+	},
+	"provides": {
+	    "compass": 1
+	}
+    },
+    {
+	"name": "STUDY",
+	"age": 3,
+	"type": "green",
+	"cost": {
+	    "wood": 1,
+	    "papyrus": 1,
+	    "textiles": 1
+	},
+	"provides": {
+	    "gear": 1
+	}
+    },
+    {
+	"name": "WORKERS GUILD",
+	"age": 3,
+	"type": "purple",
+	"cost": {
+	    "ore": 2,
+	    "clay brick": 1,
+	    "stone": 1,
+	    "wood": 1
+	},
+	"provides": {
+	    "gain": {
+		"target": 2,
+		"type": "brown",
+		"vp": 1
+	    }
+	}
+    },
+    {
+	"name": "CRAFTMENS GUILD",
+	"age": 3,
+	"type": "purple",
+	"cost": {
+	    "ore": 2,
+	    "stone": 2
+	},
+	"provides": {
+	    "gain": {
+		"target": 2,
+		"type": "grey",
+		"vp": 2
+	    }
+	}
+    },
+    {
+	"name": "TRADERS GUILD",
+	"age": 3,
+	"type": "purple",
+	"cost": {
+	    "textiles": 1,
+	    "papyrus": 1,
+	    "glass": 1
+	},
+	"provides": {
+	    "gain": {
+		"target": 2,
+		"type": "yellow",
+		"vp": 1
+	    }
+	}
+    },
+    {
+	"name": "PHILOSOPHERS GUILD",
+	"age": 3,
+	"type": "purple",
+	"cost": {
+	    "clay brick": 3,
+	    "textiles": 1,
+	    "papyrus": 1
+	},
+	"provides": {
+	    "gain": {
+		"target": 2,
+		"type": "green",
+		"vp": 1
+	    }
+	}
+    },
+    {
+	"name": "SPY GUILD",
+	"age": 3,
+	"type": "purple",
+	"cost": {
+	    "clay brick": 3,
+	    "glass": 1
+	},
+	"provides": {
+	    "gain": {
+		"target": 2,
+		"type": "brown",
+		"vp": 1
+	    }
+	}
+    },
+    {
+	"name": "STRATEGY GUILD",
+	"age": 3,
+	"type": "purple",
+	"cost": {
+	    "ore": 2,
+	    "stone": 1,
+	    "textiles": 1
+	},
+	"provides": {
+	    "gain": {
+		"target": 2,
+		"type": "defeat token",
+		"vp": 1
+	    }
+	}
+    },
+    {
+	"name": "SHIPOWNERS GUILD",
+	"age": 3,
+	"type": "purple",
+	"cost": {
+	    "wood": 3,
+	    "papyrus": 1,
+	    "glass": 1
+	},
+	"provides": {
+	    "gain": {
+		"target": 1,
+		"type": "brown/grey/purple",
+		"vp": 1
+	    }
+	}
+    },
+    {
+	"name": "SCIENTISTS GUILD",
+	"age": 3,
+	"type": "purple",
+	"cost": {
+	    "wood": 2,
+	    "ore": 2,
+	    "papyrus": 1
+	},
+	"provides": {
+	    "compass/gear/tablet": 1
+	}
+    },
+    {
+	"name": "MAGISTRATES GUILD",
+	"age": 3,
+	"type": "purple",
+	"cost": {
+	    "wood": 3,
+	    "stone": 1,
+	    "textiles": 1
+	},
+	"provides": {
+	    "gain": {
+		"target": 2,
+		"type": "blue",
+		"vp": 1
+	    }
+	}
+    },
+    {
+	"name": "BUILDERS GUILD",
+	"age": 3,
+	"type": "purple",
+	"cost": {
+	    "stone": 2,
+	    "clay brick": 2,
+	    "glass": 1
+	},
+	"provides": {
+	    "gain": {
+		"target": 3,
+		"type": "age",
+		"vp": 1
+	    }
+	}
+    },
+
+]);

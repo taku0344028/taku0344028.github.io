@@ -1,7 +1,7 @@
 /******************************************************************************
  * board.js
  *
- * Time-stamp: <Wed Jul 22 08:22:24 2015> 
+ * Time-stamp: <Sun Jul 26 22:05:02 2015> 
  *
  * (C) 2015 Takuya Okubo.
  ******************************************************************************/
@@ -25,16 +25,16 @@ Random.prototype = {
     }
 };
 
-var E_TOP = 1 << 0;
-var E_RIGHT = 1 << 1;
+var E_TOP    = 1 << 0;
+var E_RIGHT  = 1 << 1;
 var E_BOTTOM = 1 << 2;
-var E_LEFT = 1 << 3;
+var E_LEFT   = 1 << 3;
 var color = [
     "",
     "red", "green", "blue", "yellow",
-    "red", "green", "blue", "yellow",
-    "red", "green", "blue", "yellow",
-    "red", "green", "blue", "yellow"
+    "green", "blue", "yellow", "red",
+    "blue", "yellow", "red", "green",
+    "yellow", "red", "green", "blue"
 ];
 
 var shape = [
@@ -67,7 +67,12 @@ HyperRobot.prototype = {
 	    .adjustWall()
 	    .setTargetTiles()
 	    .setOuterWall()
-	    .adjustWall();
+	    .adjustWall()
+	    .setGoalTarget();
+    },
+    setGoalTarget: function(){
+	var r = (this.rand.getRand() % 16) + 1;
+	this.goalTarget = {target: r, wall: 0};
     },
     setTargetTiles: function(){
 	var wallList;
@@ -86,6 +91,18 @@ HyperRobot.prototype = {
 	    var w = wallList.splice(this.rand.getRand() % wallList.length, 1)[0];
 	    this.tile[row][col].target = i;
 	    this.tile[row][col].wall = 1 << (w % 4) | 1 << ((w + 1) % 4);
+	}
+
+	// set special target tile
+	while(1){
+	    row = this.rand.getRand() % 16;
+	    col = this.rand.getRand() % 16;
+	    if(this.lineIsEmpty(row, col) && this.aroundIsEmpty(row, col)){
+		w = this.rand.getRand() % 4;
+		this.tile[row][col].target = 99;
+		this.tile[row][col].wall = 1 << w | 1 << ((w + 1) % 4);
+		break;
+	    }
 	}
 	// var i = 1;
 	// var wallList;
@@ -226,6 +243,7 @@ GameManager.prototype = {
 };
 
 var BoardWriter = function(){
+    this.tileCount = 0;
 };
 BoardWriter.prototype = {
     clear: function(ctx, x, y, w, h){
@@ -251,32 +269,44 @@ BoardWriter.prototype = {
 	    }
 	}
 	this.writeGrid(ctx, margin, margin, gridSize, gridSize);
+
+	ctx.save();
+	ctx.fillRect(margin + tileSize * 7, margin + tileSize * 7, tileSize * 2, tileSize * 2);
+	ctx.restore();
+
+	this.writeTargetTile(ctx, hyperRobot.goalTarget.target, margin + tileSize * 7, margin + tileSize * 7, tileSize * 2, tileSize * 2);
 	return true;
     },
-    writeTile: function(ctx, tile, x, y, w, h){
-	this.writeTileBase(ctx, x, y, w, h);
-	if(tile.target){
-	    switch(tile.target % 4){
+    writeTargetTile: function(ctx, target, x, y, w, h){
+	if(target == 99){
+	    this.writeSpecialTarget(ctx, x, y, w, h);
+	}
+	else if(target){
+	    switch(target % 4){
 	    case 0:
-		this.writeTriangleTarget(ctx, color[tile.target], x, y, w, h);
+		this.writeTriangleTarget(ctx, color[target], x, y, w, h);
 		break;
 	    case 1:
-		this.writeSquareTarget(ctx, color[tile.target], x, y, w, h);
+		this.writeSquareTarget(ctx, color[target], x, y, w, h);
 		break;
 	    case 2:
-		this.writeDiamondTarget(ctx, color[tile.target], x, y, w, h);
+		this.writeDiamondTarget(ctx, color[target], x, y, w, h);
 		break;
 	    case 3:
-		this.writeMoonTarget(ctx, color[tile.target], x, y, w, h);
+		this.writeMoonTarget(ctx, color[target], x, y, w, h);
 		break;
 	    default:
 		ctx.save();
-		ctx.fillStyle = color[tile.target];
+		ctx.fillStyle = color[target];
 		ctx.fillRect(x, y, w, h);
 		ctx.restore();
 		break;
 	    }
-	}
+	}	
+    },
+    writeTile: function(ctx, tile, x, y, w, h){
+	this.writeTileBase(ctx, x, y, w, h);
+	this.writeTargetTile(ctx, tile.target, x, y, w, h);
 	this.writeWall(ctx, tile.wall, x, y, w, h);
     },
     writeMoonTarget: function(ctx, color, x, y, w, h){
@@ -410,6 +440,15 @@ BoardWriter.prototype = {
 	ctx.fill();
 	ctx.restore();
     },
+    writeSpecialTarget: function(ctx, x, y, w, h){
+	ctx.save();
+	ctx.fillStyle = "black";
+	ctx.translate(x, y);
+	ctx.beginPath();
+	ctx.arc(w * 0.5, h * 0.5, w * 0.25, 0, Math.PI * 2, true);
+	ctx.fill();
+	ctx.restore();
+    },
     writeTileBase: function(ctx, x, y, w, h){
 	var xx = x, yy = y, ww = w, hh = h;
 	ctx.save();
@@ -427,42 +466,77 @@ BoardWriter.prototype = {
 	ctx.strokeRect(xx, yy, ww, hh);
 	ctx.fillRect(xx, yy, ww, hh);
 
+	// 
+	ctx.save();
+	ctx.translate(w * 0.14, h * 0.14);
+	ctx.fillStyle = "silver";
+	for(var n = 0; n < 9; n++){
+	    ctx.beginPath();
+	    ctx.arc(w * 0.36 * (n % 3), h * 0.36 * Math.floor(n / 3), 2, 0, Math.PI * 2, true);
+	    ctx.stroke();
+	    ctx.fill();
+	}
+	ctx.restore();
+
 	xx = w * 0.33;
 	yy = h * 0.33;
 	ww = w * 0.34;
 	hh = h * 0.34;
 
-	ctx.fillStyle = "#ecb";
-	ctx.fillRect(xx, yy, ww, hh);
+	ctx.fillStyle = "#eea";
+	ctx.beginPath();
+	ctx.rect(xx, yy, ww, hh);
+	ctx.fill();
+	ctx.clip();
+	ctx.save();
+	this.tileCount++;
+	if(this.tileCount % 16 == 0)
+	    this.tileCount++;
+	var rad;
+	if(this.tileCount % 2 == 0){
+	    ctx.translate(w * 0.84, h * 0.5);
+	    rad = Math.PI * 0.75;
+	}
+	else{
+	    ctx.translate(w * 0.5, h * 0.16);
+	    rad = Math.PI * 0.25;
+	}
+	ctx.transform(Math.cos(rad), Math.sin(rad), -Math.sin(rad), Math.cos(rad), 0, 0);
+	ctx.fillStyle = "#777";
+	for(var i = 0; i < 4; i++){
+	    ctx.fillRect(w * 0.14 * i, 0, w * 0.07, h);
+	}
+	ctx.restore();
 	ctx.restore();
     },
     writeWall: function(ctx, wall, x, y, w, h){
 	ctx.save();
+	ctx.translate(x, y);
 	ctx.fillStyle = "brown";
 	var thickness = h * 0.1;
 	if(wall & E_TOP){
-	    ctx.fillRect(x, y, w, thickness);
+	    ctx.fillRect(0, 0, w, thickness);
 	    if(wall & E_LEFT)
-		ctx.fillRect(x - thickness, y - thickness, thickness, thickness);
+		ctx.fillRect(-thickness, -thickness, thickness, thickness);
 	    if(wall & E_RIGHT)
-		ctx.fillRect(x + w, y - thickness, thickness, thickness);
+		ctx.fillRect(w, -thickness, thickness, thickness);
 	}
 	if(wall & E_LEFT){
-	    ctx.fillRect(x, y, thickness, h);
+	    ctx.fillRect(0, 0, thickness, h);
 	}
 	if(wall & E_RIGHT){
-	    ctx.fillRect(x + w - thickness, y, thickness, h);
+	    ctx.fillRect(w - thickness, 0, thickness, h);
 	}
 	if(wall & E_BOTTOM){
-	    ctx.fillRect(x, y + h - thickness, w, thickness);
+	    ctx.fillRect(0, h - thickness, w, thickness);
 	    if(wall & E_LEFT){
 		ctx.save();
 		ctx.fillStyle = "blue";
-		ctx.fillRect(x - thickness, y + h, thickness, thickness);
+		ctx.fillRect(-thickness, h, thickness, thickness);
 		ctx.restore();
 	    }
 	    if(wall & E_RIGHT)
-		ctx.fillRect(x + w, y + h, thickness, thickness);
+		ctx.fillRect(w, h, thickness, thickness);
 	}
 	ctx.restore();
     },
