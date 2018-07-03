@@ -66,7 +66,7 @@ let forestlab = {};
 		if (h[median] == undefined)
 		    continue;
 		k += h[median];
-		freqRatio[median] = k * 100 / this.repeat;
+		freqRatio[median] = k / this.repeat;
 	    }
 	    for (let k in counter) {
 		counter[k] = counter[k] * 100 / this.repeat;
@@ -76,7 +76,7 @@ let forestlab = {};
 		max: max,
 		mode: mode,
 		median: median,
-		mean: sum / this.repeat,
+		mean: Math.round(sum * 100 / this.repeat) / 100,
 		freq: h,
 		freqRatio: freqRatio,
 		success: counter
@@ -157,6 +157,9 @@ let forestlab = {};
 
 	    //let options = {title: "title", height: 300, width:400};
 	    let options = {
+		vAxis: {
+		    format: "percent"
+		},
 		curveType: "function",
 		animation: {
 		    duration: 500,
