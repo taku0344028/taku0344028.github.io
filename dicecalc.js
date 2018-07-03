@@ -59,8 +59,7 @@ let forestlab = {};
 	let tester = new forestlab.Tester(10000);
 	const elemNumDice = document.getElementById("numDice");
 	const elemDiceType = document.getElementById("diceType");
-
-	document.getElementById("diceForm").onsubmit = function(){
+	const calcStart = function(){
 	    let r;
 	    const numDice = elemNumDice.value;
 	    const diceType = elemDiceType.value;
@@ -75,6 +74,7 @@ let forestlab = {};
 	    document.getElementById("avg").innerText = r.avg;
 	    return false;
 	};
+	document.getElementById("execButton").onclick = calcStart;
     }, false);
 })();
 
