@@ -21,7 +21,12 @@ let forestlab = {};
     };
     ns.Tester.prototype = {
 	test: function(numDice,n){
+	    if(numDice == 0 || n == 0)
+		return {min: 0, max: 0, mean: 0, median: 0, mode: 0, freq: {}};
+	    let min = -1;
+	    let max = 0;
 	    let sum = 0;
+	    let mode = 0;
 	    let h = {};
 	    for (let i = 0; i < this.repeat; i++) {
 		let r = this.run(numDice,n); 
@@ -29,9 +34,27 @@ let forestlab = {};
 		    h[r] = 0;
 		h[r]++;
 		sum += r;
+		if (r > max)
+		    max = r;
+		if (min == -1 || min > r)
+		    min = r;
+		if (mode == 0 || (mode != r && h[mode] < h[r]))
+		    mode = r;
+	    }
+	    let k = 0;
+	    let median = 0;
+	    while (k < this.repeat / 2){
+		median++;
+		if (h[median] == undefined)
+		    continue;
+		k += h[median];
 	    }
 	    return {
-		avg: sum / this.repeat,
+		min: min,
+		max: max,
+		mode: mode,
+		median: median,
+		mean: sum / this.repeat,
 		freq: h
 	    };
 	},
@@ -79,7 +102,11 @@ let forestlab = {};
 		console.log(e);
 		return false;
 	    }
-	    document.getElementById("avg").innerText = r.avg;
+	    document.getElementById("min").innerText = r.min;
+	    document.getElementById("max").innerText = r.max;
+	    document.getElementById("mean").innerText = r.mean;
+	    document.getElementById("median").innerText = r.median;
+	    document.getElementById("mode").innerText = r.mode;
 	    tableData = new google.visualization.DataTable();
 	    
 	    tableData.addColumn("number", "x");
