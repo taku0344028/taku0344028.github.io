@@ -22,11 +22,17 @@ let forestlab = {};
     ns.Tester.prototype = {
 	test: function(numDice,n){
 	    let sum = 0;
+	    let h = {};
 	    for (let i = 0; i < this.repeat; i++) {
-		sum += this.run(numDice,n);
+		let r = this.run(numDice,n); 
+		if (h[r] == undefined)
+		    h[r] = 0;
+		h[r]++;
+		sum += r;
 	    }
 	    return {
-		avg: sum / this.repeat
+		avg: sum / this.repeat,
+		freq: h
 	    };
 	},
 	run: function(numDice,n){
@@ -56,7 +62,9 @@ let forestlab = {};
 
 (function(){
     window.addEventListener("load", function(){
-	let tester = new forestlab.Tester(10000);
+	let tester = new forestlab.Tester(100000);
+	let tableData;
+	let chart;
 	const elemNumDice = document.getElementById("numDice");
 	const elemDiceType = document.getElementById("diceType");
 	const calcStart = function(){
@@ -72,8 +80,29 @@ let forestlab = {};
 		return false;
 	    }
 	    document.getElementById("avg").innerText = r.avg;
+	    tableData = new google.visualization.DataTable();
+	    
+	    tableData.addColumn("number", "x");
+	    tableData.addColumn("number", "v");
+
+	    for (let n in r.freq) {
+		tableData.addRow([parseInt(n), r.freq[n]]);
+	    }
+	    
+	    //let options = {title: "title", height: 300, width:400};
+	    let options = {};
+            chart.draw(tableData, options);
+
 	    return false;
 	};
+
+	// Load the Visualization API and the corechart package.
+	google.charts.load('current', {'packages':['corechart']});
+	google.charts.setOnLoadCallback(function(){
+            // Instantiate and draw our chart, passing in some options.
+            chart = new google.visualization.AreaChart(document.getElementById('chart'));
+	});
+
 	document.getElementById("execButton").onclick = calcStart;
     }, false);
 })();
