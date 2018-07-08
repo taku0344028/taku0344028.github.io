@@ -59,14 +59,17 @@ let forestlab = {};
 		}
 	    }
 	    let k = 0;
+	    let v = 0;
 	    let median = 0;
 	    let freqRatio = [];
 	    while (k < this.repeat){
-		median++;
-		if (h[median] == undefined)
+		v++;
+		if (h[v] == undefined)
 		    continue;
-		k += h[median];
-		freqRatio[median] = k / this.repeat;
+		if (k < this.repeat / 2)
+		    median = v;
+		k += h[v];
+		freqRatio[v] = k / this.repeat;
 	    }
 	    for (let k in counter) {
 		counter[k] = counter[k] * 100 / this.repeat;
