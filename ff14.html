@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #mainBoard {
+            width: 900px;
+            height: 600px;
+            border: 1px solid #333;
+            background-color: beige;
+        }
+    </style>
+</head>
+<body>
+    <div id="controller">
+        <select name="パターン" id="patternSelector">
+            <option value="p1_s_a">そよそよパターンA</option>
+            <option value="p1_s_b">そよそよパターンB</option>
+            <option value="p1_s_c">そよそよパターンC</option>
+            <option value="p1_s_d">そよそよパターンD</option>
+            <option value="p1_h_a">ひえひえパターンA</option>
+            <option value="p1_h_b">ひえひえパターンB</option>
+            <option value="p1_h_c">ひえひえパターンC</option>
+            <option value="p1_h_d">ひえひえパターンD</option>
+        </select>    
+    </div>
+    <canvas id="mainBoard">
+
+    </canvas>
+    <!-- <textarea name="" id="log" cols="60" rows="20" disabled>
+        this is log.
+    </textarea> -->
+
+    <script src="./main.js"></script>
+</body>
+</html>
